@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-cn">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Sampling Methods," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文旨在回顾论文Survey of resampling techniques for improving classification performance in unbalanced datasets。该论文中，Ajinkya More回顾了以往文献中提出的一些重采样技术，用其处理人工合成的不均衡数据集，并研究各种技术对分类性能的影响。论文中关于欠采样和过采样方法总结比较全面，算法描述清晰，">
+<meta name="keywords" content="Sampling Methods">
+<meta property="og:type" content="article">
+<meta property="og:title" content="采样方法">
+<meta property="og:url" content="https://zerolew.github.io/2017/11/03/ML/Imbalanced Learning/Sampling Methods/index.html">
+<meta property="og:site_name" content="Satan’s Blog">
+<meta property="og:description" content="本文旨在回顾论文Survey of resampling techniques for improving classification performance in unbalanced datasets。该论文中，Ajinkya More回顾了以往文献中提出的一些重采样技术，用其处理人工合成的不均衡数据集，并研究各种技术对分类性能的影响。论文中关于欠采样和过采样方法总结比较全面，算法描述清晰，">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://oydrxt8yx.bkt.clouddn.com/images//ML/Resampling.png">
+<meta property="og:image" content="http://oydrxt8yx.bkt.clouddn.com/images/ML/One-Sided Selection.png">
+<meta property="og:image" content="http://oydrxt8yx.bkt.clouddn.com/images/ML/EasyEnsemble.png">
+<meta property="og:image" content="http://oydrxt8yx.bkt.clouddn.com/images/ML/BalanceCascade.png">
+<meta property="og:updated_time" content="2017-11-06T08:43:46.675Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="采样方法">
+<meta name="twitter:description" content="本文旨在回顾论文Survey of resampling techniques for improving classification performance in unbalanced datasets。该论文中，Ajinkya More回顾了以往文献中提出的一些重采样技术，用其处理人工合成的不均衡数据集，并研究各种技术对分类性能的影响。论文中关于欠采样和过采样方法总结比较全面，算法描述清晰，">
+<meta name="twitter:image" content="http://oydrxt8yx.bkt.clouddn.com/images//ML/Resampling.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zerolew.github.io/2017/11/03/ML/Imbalanced Learning/Sampling Methods/"/>
+
+
+
+
+
+  <title>采样方法 | Satan’s Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d0ff47b11f5a30de7aa39a31080abccd";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-cn">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Satan’s Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/11/03/ML/Imbalanced Learning/Sampling Methods/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Satan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Satan’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">采样方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T16:41:28+08:00">
+                2017-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/Imbalanced-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Imbalanced Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文旨在回顾论文<a href="https://arxiv.org/abs/1608.06048" title="Survey of resampling techniques for improving classification performance in unbalanced datasets" target="_blank" rel="noopener">Survey of resampling techniques for improving classification performance in unbalanced datasets</a>。该论文中，Ajinkya More回顾了以往文献中提出的一些重采样技术，用其处理人工合成的不均衡数据集，并研究各种技术对分类性能的影响。论文中关于欠采样和过采样方法总结比较全面，算法描述清晰，实验配图丰富。论文中提及的算法见下图：<img title="Resampling Techniques" src="http://oydrxt8yx.bkt.clouddn.com/images//ML/Resampling.png"> 论文中关于CNN算法的描述，个人比较推荐看<a href="http://www.math.le.ac.uk/people/ag153/homepage/KNN/KNN3.html#L7" title="CNN for data reduction" target="_blank" rel="noopener">CNN for data reduction</a>; 关于EasyEnsemble和BalanceCascade算法的描述，个人推荐看原始论文<a href="https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/tsmcb09.pdf" title="Exploratory Undersampling for Class-Imbalance Learning" target="_blank" rel="noopener">Exploratory Undersampling for Class-Imbalance Learning</a>。<br><a id="more"></a></p>
+<h3 id="符号说明"><a href="#符号说明" class="headerlink" title="符号说明"></a>符号说明</h3><p>训练集：$S=\lbrace (x_i,y_i) \rbrace $, $i=1,\dots,m $<br>特征：$x_i \in X$, $ X \subset \mathbb{R}^{n}$<br>标签：$y_i \in Y= \lbrace 1,\dots,C \rbrace$, $C=2$<br>少数类：$S_{min} \subset S$<br>多数类：$S_{maj} \subset S$</p>
+<h3 id="Sampling"><a href="#Sampling" class="headerlink" title="Sampling"></a>Sampling</h3><h4 id="Undersampling"><a href="#Undersampling" class="headerlink" title="Undersampling"></a>Undersampling</h4><ul>
+<li>在多数类中随机抽取样本点，从训练集中移除该点。</li>
+<li>多数类中每个点的近邻点为同类点时结果较好，可能丢失重要信息(prototypes)。</li>
+</ul>
+<h4 id="Oversampling"><a href="#Oversampling" class="headerlink" title="Oversampling"></a>Oversampling</h4><ul>
+<li>在少数类中随机抽取样本点，复制该样本点并加入训练集中。</li>
+<li>某些样本的多个实例相互关联，导致分类器归纳规则过于具体，易于过拟合。</li>
+</ul>
+<h4 id="NearMiss-Family"><a href="#NearMiss-Family" class="headerlink" title="NearMiss Family"></a>NearMiss Family</h4><p>NearMiss系列方法根据多数类中点间距离进行欠采样。</p>
+<ul>
+<li>NearMiss-1 -&gt; 对多数类中的每个点，在少数类中找到它的k个近邻点，计算k个近邻点到该点的平均距离，保留多数类中前m个平均距离最小的点。</li>
+<li>NearMiss-2 -&gt; 对多数类中的每个点，在少数类中找到它的k个最远点，计算k个最远点到该点的平均距离，保留多数类中前m个平均距离最小的点。</li>
+<li>NearMiss-3 -&gt; 对少数类中的每个点，保留多数类中它的前k个近邻点。</li>
+</ul>
+<h4 id="OSS-One-Sided-Selection"><a href="#OSS-One-Sided-Selection" class="headerlink" title="OSS(One-Sided Selection)"></a>OSS(One-Sided Selection)</h4><img title="One-Sided Selection" src="http://oydrxt8yx.bkt.clouddn.com/images/ML/One-Sided Selection.png">
+<p><em>注</em>：</p>
+<ul>
+<li>算法中的正样本为少数类，负样本为多数类。</li>
+<li>一致子集：集合$C \subseteq S$，若使用集合$C$中的样本和1-NN规则能正确分类集合$S$中的样本，则$C$是$S$的一致子集。</li>
+</ul>
+<h4 id="CBO-Cluster-Based-Oversampling"><a href="#CBO-Cluster-Based-Oversampling" class="headerlink" title="CBO(Cluster-Based Oversampling)"></a>CBO(Cluster-Based Oversampling)</h4><p>算法：</p>
+<ol>
+<li>对多数类和少数类分别进行聚类(k-means)。</li>
+<li>对多数类，通过随机过采样使得各簇样本数相同，都等于多数类中最大簇的样本数。</li>
+<li>对少数类，通过随机过采样使得各簇样本数也相同，且总样本数与处理后的多数类的总样本数相同。</li>
+</ol>
+<p><em>注</em>：原始论文<a href="https://dl.acm.org/citation.cfm?id=1007737" title="Class Imbalances versus Small Disjuncts" target="_blank" rel="noopener">Class Imbalances versus Small Disjuncts</a>中提到的几点比较有意思：</p>
+<ul>
+<li>论文认为small disjuncts才是导致不均衡数据分类性能降低的原因。</li>
+<li>数据不均衡不一定会导致分类性能降低；解决数据的不均衡也并非总能提升分类性能。</li>
+<li>分类器的偏置、属性噪声、缺失属性、类噪声和训练集大小使得small disjuncts容易错分。</li>
+<li>CBO算法能同时解决类内不均衡和类间不均衡问题。</li>
+</ul>
+<h3 id="Synthetic-Sampling"><a href="#Synthetic-Sampling" class="headerlink" title="Synthetic Sampling"></a>Synthetic Sampling</h3><h4 id="SMOTE-Synthetic-Minority-Oversampling-Technique"><a href="#SMOTE-Synthetic-Minority-Oversampling-Technique" class="headerlink" title="SMOTE(Synthetic Minority Oversampling Technique)"></a>SMOTE(Synthetic Minority Oversampling Technique)</h4><p>算法：</p>
+<ol>
+<li>对少数类中的每个点p，在少数类中找到它的k个近邻点。</li>
+<li>选取r(r &lt;= k)个近邻点，连接近邻点与点p构成r条连线。</li>
+<li>在p与其近邻点的连线上随机选取一个点加入少数类中。</li>
+</ol>
+<p><em>注</em>：</p>
+<ul>
+<li>SMOTE算法没有考虑近邻样本的类别信息，使得类域交叉增多。若原始数据集类域交叉多，则生成样本的标签不能简单的定为少数类，这种做法容易导致分类器的误分类率增高。</li>
+<li>通常会将SMOTE算法和其他算法相结合(如SMOTE + Tomek Link Removal，SMOTE + ENN等)，以达到较好的效果。</li>
+</ul>
+<h4 id="Borderline-SMOTE"><a href="#Borderline-SMOTE" class="headerlink" title="Borderline-SMOTE"></a>Borderline-SMOTE</h4><p>算法：<br>对于少数类中的每一个点p:</p>
+<ol>
+<li>在训练集$S$中找到其m个近邻点构成集合$M_p$，令 $m’=|M_p \cap L|$</li>
+<li>若$m’=m$，则点p是噪点，忽略点p并处理下一个点。</li>
+<li>若$0 \leq m’ \leq \frac{m}{2}$，则点p安全，忽略点p并处理下一个点。</li>
+<li>若$\frac{m}{2} \leq m’ \leq m$，则将点p放入DANGER集合。</li>
+</ol>
+<p>两种形式：</p>
+<ul>
+<li>Borderline-SMOTE1： 对DANGER集合中的点采用SMOTE算法生成新样本。</li>
+<li>Borderline-SMOTE2： 对DANGER集合中的点，找到其最近邻点，最近邻点可以来自少数类，也可以来自多数类，在该点与最近邻点的连线上选取样本加入少数类。</li>
+</ul>
+<h4 id="ADASYN-Adaptive-Synthetic-Sampling"><a href="#ADASYN-Adaptive-Synthetic-Sampling" class="headerlink" title="ADASYN(Adaptive Synthetic Sampling)"></a>ADASYN(Adaptive Synthetic Sampling)</h4><h3 id="Data-Cleaning"><a href="#Data-Cleaning" class="headerlink" title="Data Cleaning"></a>Data Cleaning</h3><h4 id="Tomek-Link-Removal"><a href="#Tomek-Link-Removal" class="headerlink" title="Tomek Link Removal"></a>Tomek Link Removal</h4><p>Tomek Link： 一对点，若其互为最近邻点，且归属于不同的类，则这对点为Tomek Link。<br>做法：移除数据集中所有的Tomek Link。<br>扩展：移除Tomek Link中属于多数类的点。</p>
+<h4 id="ENN-Edited-Nearest-Neighbor"><a href="#ENN-Edited-Nearest-Neighbor" class="headerlink" title="ENN(Edited Nearest Neighbor)"></a>ENN(Edited Nearest Neighbor)</h4><p>做法：对多数类中的每个点，找到它的k个近邻点，若其所属类与其k个近邻点中同类标签占多数的类不一致，则移除该点。<br>扩展：Repeated Edited Nearest Neighbor，反复执行ENN，直到没有点可以移除。</p>
+<h4 id="CNN-Condensed-Nearest-Neighbor"><a href="#CNN-Condensed-Nearest-Neighbor" class="headerlink" title="CNN(Condensed Nearest Neighbor)"></a>CNN(Condensed Nearest Neighbor)</h4><p>三类点：(1)Outliers，被其他类包围的点; (2)Prototypes，用于分类样本的最小点集; (3)Absorbed points，不属于(1)、(2)的点。<br>补充说明：</p>
+<ul>
+<li>outliers产生原因：(1)随机错误; (2)该类样本不足; (3)其他类样本过多 (4)样本基于未知特征分类; (5)其他。</li>
+<li>prototypes: 用于分类样本的最小点集合。对新样本点的类型判别，只需要该类型的点集。</li>
+</ul>
+<p><a href="http://www.math.le.ac.uk/people/ag153/homepage/KNN/OliverKNN_Presentation.pdf" target="_blank" rel="noopener">CNN算法</a>:</p>
+<ol>
+<li>遍历训练集，按序移除每个点，同时检查该点能否被正确识别。<ul>
+<li>能，放回。</li>
+<li>否，异常点，不放回。</li>
+</ul>
+</li>
+<li>对处理后的训练集进行排序，得到集合$X= \lbrace x_1,\dots,x_n \rbrace$，令$U=\lbrace x_1 \rbrace $，从$X$中移除$x_1$。</li>
+<li>遍历$X$，对$X$中的点$x_i$，在$U$中找到它的最近邻点$y_i$，若$x_i$与$y_i$标签<ul>
+<li>一致，$x_i$为absorbed points，无需加入$U$。</li>
+<li>不一致，$x_i$为prototypes，从$X$中移除，加入$U$。</li>
+</ul>
+</li>
+<li>重复step 3直到没有新的prototype加入。<br>说明：<ul>
+<li>链接中关于异常点的移除，个人理解是基于knn算法判别其是否能被正确判别。</li>
+<li>2中提及的排序方法如下：<ol>
+<li>对于训练集中的样本$x$，找到其不同类中的最近邻点$y$，再找到同类中距离$y$最近的点$x’$。</li>
+<li>计算边界比例(border ratio) $\alpha(x)=\left|\left| x’-y \right|\right|/\left|\left| x-y \right|\right|$，$\left|\left| x’-y \right|\right|$和$\left|\left| x-y \right|\right|$为距离。</li>
+<li>按照$\alpha(x)$值降序排列训练集得到$X$。</li>
+</ol>
+</li>
+<li>2中排序方法倾向于将类的边界点加入$U$中。</li>
+<li>用$U$分类新样本，产生的结果和用原始数据集分类的结果可能略有不同。</li>
+</ul>
+</li>
+</ol>
+<h3 id="Sampling-Boosting"><a href="#Sampling-Boosting" class="headerlink" title="Sampling + Boosting"></a>Sampling + Boosting</h3><h4 id="EasyEnsemble"><a href="#EasyEnsemble" class="headerlink" title="EasyEnsemble"></a>EasyEnsemble</h4><img title="EasyEnsemble" src="http://oydrxt8yx.bkt.clouddn.com/images/ML/EasyEnsemble.png">
+<h4 id="BalanceCascade"><a href="#BalanceCascade" class="headerlink" title="BalanceCascade"></a>BalanceCascade</h4><img title="BalanceCascade" src="http://oydrxt8yx.bkt.clouddn.com/images/ML/BalanceCascade.png">
+<h4 id="SMOTEBoost"><a href="#SMOTEBoost" class="headerlink" title="SMOTEBoost"></a>SMOTEBoost</h4><h4 id="DataBoost-IM"><a href="#DataBoost-IM" class="headerlink" title="DataBoost-IM"></a>DataBoost-IM</h4><h4 id="JOUS-Boost"><a href="#JOUS-Boost" class="headerlink" title="JOUS-Boost"></a>JOUS-Boost</h4>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Sampling-Methods/" rel="tag"># Sampling Methods</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/01/Algorithm/Bloom Filter/" rel="next" title="Bloom Filter">
+                <i class="fa fa-chevron-left"></i> Bloom Filter
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Satan" />
+            
+              <p class="site-author-name" itemprop="name">Satan</p>
+              <p class="site-description motion-element" itemprop="description">浮槎去，莫相逢~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号说明"><span class="nav-number">1.</span> <span class="nav-text">符号说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sampling"><span class="nav-number">2.</span> <span class="nav-text">Sampling</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Undersampling"><span class="nav-number">2.1.</span> <span class="nav-text">Undersampling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oversampling"><span class="nav-number">2.2.</span> <span class="nav-text">Oversampling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NearMiss-Family"><span class="nav-number">2.3.</span> <span class="nav-text">NearMiss Family</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OSS-One-Sided-Selection"><span class="nav-number">2.4.</span> <span class="nav-text">OSS(One-Sided Selection)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CBO-Cluster-Based-Oversampling"><span class="nav-number">2.5.</span> <span class="nav-text">CBO(Cluster-Based Oversampling)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Synthetic-Sampling"><span class="nav-number">3.</span> <span class="nav-text">Synthetic Sampling</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SMOTE-Synthetic-Minority-Oversampling-Technique"><span class="nav-number">3.1.</span> <span class="nav-text">SMOTE(Synthetic Minority Oversampling Technique)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Borderline-SMOTE"><span class="nav-number">3.2.</span> <span class="nav-text">Borderline-SMOTE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ADASYN-Adaptive-Synthetic-Sampling"><span class="nav-number">3.3.</span> <span class="nav-text">ADASYN(Adaptive Synthetic Sampling)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Cleaning"><span class="nav-number">4.</span> <span class="nav-text">Data Cleaning</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Tomek-Link-Removal"><span class="nav-number">4.1.</span> <span class="nav-text">Tomek Link Removal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ENN-Edited-Nearest-Neighbor"><span class="nav-number">4.2.</span> <span class="nav-text">ENN(Edited Nearest Neighbor)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN-Condensed-Nearest-Neighbor"><span class="nav-number">4.3.</span> <span class="nav-text">CNN(Condensed Nearest Neighbor)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sampling-Boosting"><span class="nav-number">5.</span> <span class="nav-text">Sampling + Boosting</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#EasyEnsemble"><span class="nav-number">5.1.</span> <span class="nav-text">EasyEnsemble</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BalanceCascade"><span class="nav-number">5.2.</span> <span class="nav-text">BalanceCascade</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SMOTEBoost"><span class="nav-number">5.3.</span> <span class="nav-text">SMOTEBoost</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataBoost-IM"><span class="nav-number">5.4.</span> <span class="nav-text">DataBoost-IM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JOUS-Boost"><span class="nav-number">5.5.</span> <span class="nav-text">JOUS-Boost</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Satan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
