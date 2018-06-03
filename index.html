@@ -340,6 +340,519 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/05/25/DL/04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Satan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Satan’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/25/DL/04/" itemprop="url">网络训练实用代码片段</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-25T23:11:42+08:00">
+                2018-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="限制TensorFlow-GPU占用"><a href="#限制TensorFlow-GPU占用" class="headerlink" title="限制TensorFlow GPU占用"></a>限制TensorFlow GPU占用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="string">'tensorflow'</span> == K.backend():</span><br><span class="line">    <span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">    <span class="keyword">from</span> keras.backend.tensorflow_backend <span class="keyword">import</span> set_session</span><br><span class="line"></span><br><span class="line">    config = tf.ConfigProto()</span><br><span class="line">    config.gpu_options.allow_growth = <span class="keyword">True</span></span><br><span class="line">    config.gpu_options.visible_device_list = <span class="string">"0"</span></span><br><span class="line">    set_session(tf.Session(config=config))</span><br></pre></td></tr></table></figure>
+<h3 id="清理TensorFlow的Session和Graph"><a href="#清理TensorFlow的Session和Graph" class="headerlink" title="清理TensorFlow的Session和Graph"></a>清理TensorFlow的Session和Graph</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="string">'tensorflow'</span> == K.backend():</span><br><span class="line">    <span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">    <span class="comment"># solve memory leek</span></span><br><span class="line">    K.clear_session()</span><br><span class="line">    tf.reset_default_graph()</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/25/DL/04/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/05/25/DL/03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Satan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Satan’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/25/DL/03/" itemprop="url">Keras自定义层传参</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-25T23:10:42+08:00">
+                2018-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Keras自定义层的传参方式主要有三种：</p>
+<ul>
+<li>在其<code>call</code>方法中传入<code>Input</code>类型的参数</li>
+<li>在其<code>call</code>方法中传入<code>list</code>类型的参数</li>
+<li>在其<code>__init__</code>方法中传入参数</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/25/DL/03/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/05/15/DL/02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Satan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Satan’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/15/DL/02/" itemprop="url">TensorFlow 分布式训练</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T23:01:42+08:00">
+                2018-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="Three-Case"><a href="#Three-Case" class="headerlink" title="Three Case"></a>Three Case</h3><p>深度学习模型训练中，根据设备配置情况，可以分为单机单卡、单机多卡、多机等情况，以下是其代码示例。</p>
+<h4 id="Single-Card"><a href="#Single-Card" class="headerlink" title="Single Card"></a>Single Card</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一般是参数定义在cpu上，计算图定义在gpu上</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/cpu:0"</span>):</span><br><span class="line">    W = tf.Variable(...)</span><br><span class="line">    b = tf.Variable(...)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/gpu:0"</span>):</span><br><span class="line">    output = tf.matmul(input, W) + b</span><br><span class="line">    loss = f(output)</span><br></pre></td></tr></table></figure>
+<h4 id="Multiple-Cards"><a href="#Multiple-Cards" class="headerlink" title="Multiple Cards"></a>Multiple Cards</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一般是参数定义在cpu上，计算图分散定义在gpu上</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/cpu:0"</span>):</span><br><span class="line">    weights_1 = tf.Variable(...)</span><br><span class="line">    biases_1 = tf.Variable(...)</span><br><span class="line"></span><br><span class="line">    weights_2 = tf.Variable(...)</span><br><span class="line">    biases_2 = tf.Variable(...)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/gpu:0"</span>):</span><br><span class="line">    layer_1 = tf.nn.relu(tf.matmul(input, weights_1) + biases_1)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/gpu:1"</span>):</span><br><span class="line">    output = tf.matmul(layer_1, weights_2) + biases_2</span><br><span class="line">    loss = f(output)</span><br></pre></td></tr></table></figure>
+<h4 id="Multiple-Machine"><a href="#Multiple-Machine" class="headerlink" title="Multiple Machine"></a>Multiple Machine</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用gRPC在进程间传输tensor</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:ps/task:0/cpu:0"</span>):</span><br><span class="line">    W = tf.Variable(...)</span><br><span class="line">    b = tf.Variable(...)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:worker/task:0/gpu:0"</span>):</span><br><span class="line">    output = tf.matmul(input, W) + b</span><br><span class="line">    loss = f(output)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/15/DL/02/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/05/15/DL/01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Satan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Satan’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/15/DL/01/" itemprop="url">Windows7 x64离线安装keras和theano</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T22:49:44+08:00">
+                2018-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul>
+<li><a href="https://msdn.itellyou.cn/" target="_blank" rel="noopener">visual studio 2015</a></li>
+<li><a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">cuda_9.0.176_windows</a></li>
+<li><a href="https://developer.nvidia.com/cudnn" target="_blank" rel="noopener">cudnn-9.0-windows7-x64-v7</a></li>
+<li><a href="https://www.jetbrains.com/pycharm/download/#section=windows" target="_blank" rel="noopener">pycharm-community-2018.1.1</a></li>
+<li><a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/" target="_blank" rel="noopener">Miniconda3-latest-Windows-x86_64</a></li>
+<li><a href="https://www.nvidia.cn/Download/index.aspx" target="_blank" rel="noopener">391.35-desktop-win8-win7-64bit-international-whql</a></li>
+</ul>
+<p><em>注</em>: 显卡驱动需要根据显卡型号去NVIDIA官网下载<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/15/DL/01/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/11/03/ML/Imbalanced Learning/Sampling Methods/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1225,172 +1738,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/10/01/Ubuntu/Ubuntu 16.04安装及配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Satan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Satan’s Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/01/Ubuntu/Ubuntu 16.04安装及配置/" itemprop="url">Ubuntu 16.04安装及配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-01T23:43:04+08:00">
-                2017-10-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ubuntu/" itemprop="url" rel="index">
-                    <span itemprop="name">ubuntu</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本文主要介绍Ubuntu 16.04系统的U盘启动盘制作、系统安装、系统个性化设置、常用软件安装及不常用软件清理等过程。</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h4><ol>
-<li>UltraISO</li>
-<li>EasyBCD</li>
-<li>FixMbr</li>
-<li>Ubuntu镜像(.iso)</li>
-</ol>
-<h4 id="U盘启动盘制作"><a href="#U盘启动盘制作" class="headerlink" title="U盘启动盘制作"></a>U盘启动盘制作</h4><ol>
-<li>启动UltraISO，”文件”-&gt; “打开”，找到Ubuntu镜像，打开</li>
-<li>“启动”-&gt;”写入硬盘镜像”</li>
-<li>“写入方式”选择”USB-HDD+”</li>
-<li>“便捷启动”-&gt;”写入新的驱动器引导扇区”-&gt;”Syslinux”</li>
-<li>点击”写入”，等待写入完成</li>
-</ol>
-<h4 id="磁盘分配"><a href="#磁盘分配" class="headerlink" title="磁盘分配"></a>磁盘分配</h4><ol>
-<li>右键: “计算机”-&gt;”管理”-&gt;”硬盘管理”</li>
-<li>选择某分区，右键”删除卷”，得到空闲空间(free space)<br><em>注:</em> “删除卷”内的数据会丢失</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/01/Ubuntu/Ubuntu 16.04安装及配置/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1438,7 +1792,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-cn">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Three Case深度学习模型训练中，根据设备配置情况，可以分为单机单卡、单机多卡、多机等情况，以下是其代码示例。 Single Card1234567# 一般是参数定义在cpu上，计算图定义在gpu上with tf.device(&quot;/cpu:0&quot;):    W = tf.Variable(...)    b = tf.Variable(...)with tf.device(&quot;/gpu:0&quot;):">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow 分布式训练">
+<meta property="og:url" content="https://zerolew.github.io/2018/05/15/DL/02/index.html">
+<meta property="og:site_name" content="Satan’s Blog">
+<meta property="og:description" content="Three Case深度学习模型训练中，根据设备配置情况，可以分为单机单卡、单机多卡、多机等情况，以下是其代码示例。 Single Card1234567# 一般是参数定义在cpu上，计算图定义在gpu上with tf.device(&quot;/cpu:0&quot;):    W = tf.Variable(...)    b = tf.Variable(...)with tf.device(&quot;/gpu:0&quot;):">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2018-06-02T19:15:23.485Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow 分布式训练">
+<meta name="twitter:description" content="Three Case深度学习模型训练中，根据设备配置情况，可以分为单机单卡、单机多卡、多机等情况，以下是其代码示例。 Single Card1234567# 一般是参数定义在cpu上，计算图定义在gpu上with tf.device(&quot;/cpu:0&quot;):    W = tf.Variable(...)    b = tf.Variable(...)with tf.device(&quot;/gpu:0&quot;):">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zerolew.github.io/2018/05/15/DL/02/"/>
+
+
+
+
+
+  <title>TensorFlow 分布式训练 | Satan’s Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d0ff47b11f5a30de7aa39a31080abccd";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-cn">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Satan’s Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/05/15/DL/02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Satan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Satan’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TensorFlow 分布式训练</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T23:01:42+08:00">
+                2018-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Three-Case"><a href="#Three-Case" class="headerlink" title="Three Case"></a>Three Case</h3><p>深度学习模型训练中，根据设备配置情况，可以分为单机单卡、单机多卡、多机等情况，以下是其代码示例。</p>
+<h4 id="Single-Card"><a href="#Single-Card" class="headerlink" title="Single Card"></a>Single Card</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一般是参数定义在cpu上，计算图定义在gpu上</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/cpu:0"</span>):</span><br><span class="line">    W = tf.Variable(...)</span><br><span class="line">    b = tf.Variable(...)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/gpu:0"</span>):</span><br><span class="line">    output = tf.matmul(input, W) + b</span><br><span class="line">    loss = f(output)</span><br></pre></td></tr></table></figure>
+<h4 id="Multiple-Cards"><a href="#Multiple-Cards" class="headerlink" title="Multiple Cards"></a>Multiple Cards</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一般是参数定义在cpu上，计算图分散定义在gpu上</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/cpu:0"</span>):</span><br><span class="line">    weights_1 = tf.Variable(...)</span><br><span class="line">    biases_1 = tf.Variable(...)</span><br><span class="line"></span><br><span class="line">    weights_2 = tf.Variable(...)</span><br><span class="line">    biases_2 = tf.Variable(...)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/gpu:0"</span>):</span><br><span class="line">    layer_1 = tf.nn.relu(tf.matmul(input, weights_1) + biases_1)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/gpu:1"</span>):</span><br><span class="line">    output = tf.matmul(layer_1, weights_2) + biases_2</span><br><span class="line">    loss = f(output)</span><br></pre></td></tr></table></figure>
+<h4 id="Multiple-Machine"><a href="#Multiple-Machine" class="headerlink" title="Multiple Machine"></a>Multiple Machine</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用gRPC在进程间传输tensor</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:ps/task:0/cpu:0"</span>):</span><br><span class="line">    W = tf.Variable(...)</span><br><span class="line">    b = tf.Variable(...)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:worker/task:0/gpu:0"</span>):</span><br><span class="line">    output = tf.matmul(input, W) + b</span><br><span class="line">    loss = f(output)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="Distributed-TensorFlow"><a href="#Distributed-TensorFlow" class="headerlink" title="Distributed TensorFlow"></a>Distributed TensorFlow</h3><p>多机训练的情况中使用的即是分布式训练，本节将从设计动机、设计思路、基本概念、操作和对象等方面初步介绍分布式TensorFlow。</p>
+<h4 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h4><ol>
+<li>模型过于庞大时，无法在单一机器上运行。</li>
+<li>控制GPU的负载和并行训练模型，可以提高模型的吞吐量、加速模型训练。</li>
+<li>分布式TensorFlow十分灵活，可以用少量的代码自定义模型。</li>
+</ol>
+<h4 id="Ideas"><a href="#Ideas" class="headerlink" title="Ideas"></a>Ideas</h4><p>借鉴DisBelief的思想：DisBelief中有两种不同的进程：<code>parameter servers</code>和<code>worker replicas</code>，前者存储模型状态、模型参数并能根据梯度更新参数。后者主要负责密集型计算、输入数据的预处理、损失函数的计算、反向传播等。TensorFlow中则分为<code>PS tasks</code>和<code>Worker tasks</code>。前者负责变量的存储和参数的更新，后者则负责数据的预处理、损失函数的计算、反向传播等。</p>
+<p>两个系统的区别在于：1.DisBelief的两种进程的代码不同，是两个松散偶合的分布式系统，编程使用的API不同，而TensorFlow <code>PS task</code>和<code>Worker task</code>可以运行相同的代码。2.TensorFlow更加灵活，PS可以使用GPU加速参数更新的计算，Worker可以存储某些状态来避免网络拥塞，缓存某些读取的内容.</p>
+<h4 id="Concepts"><a href="#Concepts" class="headerlink" title="Concepts"></a>Concepts</h4><ul>
+<li><strong>Client</strong><br><code>client</code>构建<code>Graph</code>和<code>Session</code>，并通过<code>Session</code>与<code>cluster</code>进行交互。单个<code>client</code>进程可以直接与多个<code>TensorFlow server</code>交互，单个<code>TensorFlow server</code>也可以为多个<code>client</code>提供服务。</li>
+<li><strong>Cluster</strong><br><code>cluster</code>包含一个或多个<code>job</code>，每个<code>job</code>又可以分为一个或多个<code>task</code>。<code>cluster</code>通常专用于特定的高级目标，例如训练神经网络，并行使用多台机器。</li>
+<li><strong>Job</strong><br>一个<code>job</code>包括多个<code>task</code>，<code>job</code>中的<code>task</code>通常运行在不同的机器上，且往往具有共同的目的。TensorFlow中可以分为<code>parameter server job</code>和<code>worker job</code>，<code>parameter server job</code>(简称<code>ps job</code>)通常承载存储和更新变量的节点；<code>worker job</code>通常承载执行计算密集型任务的无状态节点。<code>job</code>的角色相对较为灵活，如<code>worker job</code>也可以维护一些状态信息。</li>
+<li><strong>Task</strong><br><code>task</code>对应于特定的<code>TensorFlow server</code>，并且通常对应单个进程。<code>task</code>属于特定<code>job</code>，并通过其在该<code>job</code>的<code>task</code>列表中的索引来标识。同一台机器可以运行多个<code>task</code>，一个<code>task</code>运行在一台机器上。</li>
+<li><strong>TensorFlow server</strong><br><code>TensorFlow server</code>提供<code>Master service</code>和<code>Worker service</code>。<code>TensorFlow server</code>可以和<code>cluster</code>中的其他任意<code>TensorFlow server</code>进行通信。</li>
+<li><strong>Master service</strong><br><code>Master service</code>是一种RPC服务，提供对一组分布式设备的远程访问，并充当会话目标。<code>Master service</code>实现<code>tensorflow::Session</code>接口，并负责协调跨一个或多个<code>worker service</code>的工作。所有<code>TensorFlow server</code>均实现了<code>Master service</code>。</li>
+<li><strong>Worker service</strong><br><code>Worker service</code>是一种RPC服务，使用本地设备执行TensorFlow <code>Graph</code>中的部分内容。一个<code>Worker service</code>实现<code>worker_service.proto</code>。所有的<code>TensorFlow server</code>均实现了<code>Worker service</code>。</li>
+</ul>
+<h4 id="Operations-amp-Objects"><a href="#Operations-amp-Objects" class="headerlink" title="Operations &amp; Objects"></a>Operations &amp; Objects</h4><p>为了创建<code>cluster</code>，需要为<code>cluster</code>中的每个<code>task</code>起一个<code>TensorFlow server</code>，在每个<code>task</code>中需要执行两个操作：</p>
+<ul>
+<li><p>创建<code>tf.train.ClusterSpec</code>对象，这个对象用于描述<code>cluster</code>中的所有<code>task</code>。这个对象在对于所有<code>task</code>来说应该是相同的。</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cluster = tf.train.ClusterSpec(&#123;</span><br><span class="line"><span class="string">"worker"</span>: [</span><br><span class="line">    <span class="string">"worker0.example.com:2222"</span>,</span><br><span class="line">    <span class="string">"worker1.example.com:2222"</span>,</span><br><span class="line">    <span class="string">"worker2.example.com:2222"</span></span><br><span class="line">],</span><br><span class="line"><span class="string">"ps"</span>: [</span><br><span class="line">    <span class="string">"ps0.example.com:2222"</span>,</span><br><span class="line">    <span class="string">"ps1.example.com:2222"</span></span><br><span class="line">]&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建<code>tf.train.Server</code>对象，这个对象接收<code>tf.train.ClusterSpec</code>对象为参数，并通过<code>job name</code>和<code>task index</code>区分于其他<code>tf.train.Server</code>对象。</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server = tf.train.Server(cluster, job_name=<span class="string">"local"</span>, task_index=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上述操作中涉及两个对象：<code>tf.train.ClusterSpec</code>和<code>tf.train.Server</code>。前者的字典定义用于建立<code>job names</code>到多个<code>network addresses</code>的映射。后者则包含了多个本地设备和到其他<code>task</code>的连接，以及一个使用相关资源执行分布式计算的<code>tf.Session</code>对象。</p>
+<h3 id="Replicated-training"><a href="#Replicated-training" class="headerlink" title="Replicated training"></a>Replicated training</h3><p>TensorFlow中的数据并行(“data parallelism”)可以理解为<code>worker job</code>中的多个<code>task</code>各自运行同一模型中不同的<code>mini-batch</code>数据，并更新位于<code>ps job</code>中多个<code>task</code>上的共享参数。针对这种训练方式，TensorFlow提供了两种实现方式：</p>
+<ul>
+<li><p>In-graph replication: 这种方式中，<code>client</code>会创建一个<code>tf.Graph</code>对象，这个对象包含一组参数和多份相同的密集计算部分。其中参数会被绑定到<code>ps job</code>中的<code>task</code>上，而密集型计算则被绑定到<code>worker job</code>中的各个<code>task</code>上，个人理解是参数的存储和更新放在<code>ps job</code>的<code>task</code>中执行，而前向传播和反向的梯度计算则放在<code>worker job</code>中的各个<code>task</code>中执行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:ps/task:0/cpu:0"</span>):</span><br><span class="line">    W = tf.Variable(...)</span><br><span class="line">    b = tf.Variable(...)</span><br><span class="line">inputs = tf.split(<span class="number">0</span>, num_workers, input)</span><br><span class="line"></span><br><span class="line">outputs = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(num_workers):</span><br><span class="line">    <span class="keyword">with</span> tf.device(<span class="string">"/job:worker/task:%d/gpu:0"</span> % i):</span><br><span class="line">        outputs.append(tf.matmul(inputs[i], W) + b)</span><br><span class="line">loss = f(outputs)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Between-graph replication: 每个<code>worker task</code>都会有一个单独的<code>client</code>，一般这个<code>client</code>和<code>worker task</code>在同一个进程中。每个<code>client</code>会构建一个<code>graph</code>，并复制模型的密集计算部分。<code>graph</code>中的参数被绑定到<code>ps job</code>的<code>task</code>上，密集计算部分则被绑定到本地的<code>worker task</code>上。</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># client 1</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:ps/task:0/cpu:0"</span>):</span><br><span class="line">    W = tf.Variable(...)</span><br><span class="line">    b = tf.Variable(...)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:worker/task:0/gpu:0"</span>):</span><br><span class="line">    output = tf.matmul(input, W) + b</span><br><span class="line">    loss = f(output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># client 2</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:ps/task:0/cpu:0"</span>):</span><br><span class="line">    W = tf.Variable(...)</span><br><span class="line">    b = tf.Variable(...)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:worker/task:0/gpu:0"</span>):</span><br><span class="line">    output = tf.matmul(input, W) + b</span><br><span class="line">    loss = f(output)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Device-placement"><a href="#Device-placement" class="headerlink" title="Device placement"></a>Device placement</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. string</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:ps/task:0"</span>):</span><br><span class="line">    weights_1 = tf.get_variable(<span class="string">"weights_1"</span>, [<span class="number">784</span>, <span class="number">100</span>])</span><br><span class="line">    biases_1 = tf.get_variable(<span class="string">"biases_1"</span>, [<span class="number">100</span>])</span><br><span class="line">    weights_2 = tf.get_variable(<span class="string">"weights_2"</span>, [<span class="number">100</span>, <span class="number">10</span>])</span><br><span class="line">    biases_2 = tf.get_variable(<span class="string">"biases_2"</span>, [<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. device function</span></span><br><span class="line"><span class="comment"># Round-robin variables</span></span><br><span class="line"><span class="keyword">with</span> tf.device(tf.train.replica_device_setter(ps_tasks=<span class="number">3</span>)):</span><br><span class="line">    weights_1 = tf.get_variable(<span class="string">"weights_1"</span>, [<span class="number">784</span>, <span class="number">100</span>])</span><br><span class="line">    biases_1 = tf.get_variable(<span class="string">"biases_1"</span>, [<span class="number">100</span>])</span><br><span class="line">    weights_2 = tf.get_variable(<span class="string">"weights_2"</span>, [<span class="number">100</span>, <span class="number">10</span>])</span><br><span class="line">    biases_2 = tf.get_variable(<span class="string">"biases_2"</span>, [<span class="number">10</span>])</span><br><span class="line"><span class="comment"># One nice thing about this device function is you can just wrap your entire model building code in this with block. It only affects the variables puts on PS tasks, and the rest of your ops in the graph will go on a worker.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. Load balancing variables</span></span><br><span class="line">greedy = tf.contrib.training.GreedyLoadBalancingStrategy(...)</span><br><span class="line"><span class="keyword">with</span> tf.device(tf.train.replica_device_setter(ps_tasks=<span class="number">3</span>, ps_strategy=greedy)):</span><br><span class="line">    weights_1 = tf.get_variable(<span class="string">"weights_1"</span>, [<span class="number">784</span>, <span class="number">100</span>])</span><br><span class="line">    biases_1 = tf.get_variable(<span class="string">"biases_1"</span>, [<span class="number">100</span>])</span><br><span class="line">    weights_2 = tf.get_variable(<span class="string">"weights_2"</span>, [<span class="number">100</span>, <span class="number">10</span>])</span><br><span class="line">    biases_2 = tf.get_variable(<span class="string">"biases_2"</span>, [<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. Partitioned variables</span></span><br><span class="line">greedy = tf.contrib.training.GreedyLoadBalancingStrategy(...)</span><br><span class="line"><span class="keyword">with</span> tf.device(tf.train.replica_device_setter(ps_tasks=<span class="number">3</span>, ps_strategy=greedy)):</span><br><span class="line">    embedding = tf.get_variable(<span class="string">"embedding"</span>, [<span class="number">1000000000</span>, <span class="number">20</span>], </span><br><span class="line">                                partitioner=tf.fixed_size_partitioner(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. Customize using nested with tf.device(...): blocks</span></span><br></pre></td></tr></table></figure>
+<h3 id="Sessions-and-servers"><a href="#Sessions-and-servers" class="headerlink" title="Sessions and servers"></a>Sessions and servers</h3><ol>
+<li><p>Single-process code</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(init_op)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(NUM_STEPS):</span><br><span class="line">        sess.run(train_op)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Distributed code for a Worker task</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cluster = tf.train.ClusterSpec(&#123;<span class="string">"worker"</span>: [<span class="string">"192.168.0.1:2222"</span>, ...],</span><br><span class="line">                                <span class="string">"ps"</span>: [<span class="string">"192.168.1.1:2222"</span>, ...]&#125;)</span><br><span class="line">server = tf.train.server(cluster, job_name=<span class="string">"worker"</span>, task_index=<span class="number">0</span>)</span><br><span class="line"><span class="keyword">with</span> tf.Session(server.target) <span class="keyword">as</span> sess: <span class="comment"># sess can run code on any device in cluster</span></span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Distributed code for a PS task</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cluster = tf.train.ClusterSpec(&#123;<span class="string">"worker"</span>: [<span class="string">"192.168.0.1:2222"</span>, ...],</span><br><span class="line">                                <span class="string">"ps"</span>: [<span class="string">"192.168.1.1:2222"</span>, ...]&#125;)</span><br><span class="line">server = tf.train.server(cluster, job_name=<span class="string">"ps"</span>, task_index=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># Wait for incoming connections forever</span></span><br><span class="line">server.join()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Fault-tolerance"><a href="#Fault-tolerance" class="headerlink" title="Fault tolerance"></a>Fault tolerance</h3><h4 id="Saver"><a href="#Saver" class="headerlink" title="Saver"></a>Saver</h4><p>Saver now support a variety of distributed file systems:</p>
+<ol>
+<li>local file system</li>
+<li>google cloud storage if you’re running on Cloud ML</li>
+<li>HDFS if you’re running on top of Hadoop cluster<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.device(tf.train.replica_device_setter(ps_tasks=<span class="number">3</span>)):</span><br><span class="line">    weights_1 = tf.get_variable(<span class="string">"weights_1"</span>, [<span class="number">784</span>, <span class="number">100</span>])</span><br><span class="line">    biases_1 = tf.get_variable(<span class="string">"biases_1"</span>, [<span class="number">100</span>])</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The same saver can be used for local and distributed training</span></span><br><span class="line"><span class="comment"># sharede=True tells TensorFlow: write the checkpoint in three shards, one each containing all the variables from one particular parameter server.</span></span><br><span class="line">saver = tf.train.Saver(sharded=<span class="keyword">True</span>) <span class="comment"># Each PS task writes in parallel</span></span><br><span class="line"><span class="keyword">with</span> tf.Session(TensorFlow server.target) <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">    <span class="comment"># If you are using between-graph replication: One worker task act as "chief" be responsible for writing this checkpoint.</span></span><br><span class="line">    <span class="keyword">if</span> is_chief <span class="keyword">and</span> step % <span class="number">1000</span> == <span class="number">0</span>:</span><br><span class="line">        saver.save(sess, <span class="string">"/home/mrry/..."</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="Chief-Task"><a href="#Chief-Task" class="headerlink" title="Chief Task"></a>Chief Task</h4><p>Chief Worker do three maintenance task</p>
+<ol>
+<li>writing checkpoints</li>
+<li>initializing the parameters</li>
+<li>logging summaries for TensorBoard</li>
+</ol>
+<h4 id="Fault"><a href="#Fault" class="headerlink" title="Fault"></a>Fault</h4><p>case &amp; solution:</p>
+<ol>
+<li>non-chief workers fails(best case, stateless)<br>contact all the PS tasks again and carry on</li>
+<li>PS task fails (a little worse case)<br>chief notice the failure, it interrupts training on all of the workers and restores all the PS tasks from the last checkpoint</li>
+<li>Chief task fails (trickiest case)<br>interrupt training when the chief fails, and when it comes back up, we restore from a checkpoint just like a parameter TensorFlow server fails</li>
+</ol>
+<p>MonitorTrainingSession automates the recovery process<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># single-process code.</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(init_op) <span class="comment"># Or saver.restore(sess, ...)</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(NUM_STEPS):</span><br><span class="line">        sess.run(train_op)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Distributed code.</span></span><br><span class="line">server = tf.train.server(...)</span><br><span class="line">is_chief = FLAGS.task_index == <span class="number">0</span></span><br><span class="line"><span class="keyword">with</span> tf.train.MonitorTrainingSession(server.target, is_chief) <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="comment"># there's no init op in the program anymore, MonitorTrainingSession will automatically ensure that all of the variables have been initialized either from their initial values, or by restoring them from the latest checkpoint if one is available before it returns control back to the user. </span></span><br><span class="line">    <span class="comment"># It does something slightly different depending on if you're the chief or not. So if you're the chief, it's going to go and look and see if there is a checkpoint, or it's goint to run the initializers. If you're not the chief, it just sits there waiting until the chief does its work, and then as soon as it's done, it can carry on the training loop.</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> sess.should_stop():</span><br><span class="line">        sess.run(train_op)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Experiments-and-Estimators"><a href="#Experiments-and-Estimators" class="headerlink" title="Experiments and Estimators"></a>Experiments and Estimators</h3><p>High-Level APIs package up the whole distributed workflow<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">experiment_fn</span><span class="params">(config, params)</span>:</span></span><br><span class="line">    features = [tf.layers.embedding_column(...),</span><br><span class="line">                tf.layers.bucketized_column(...)]</span><br><span class="line">    <span class="keyword">return</span> Experiment(</span><br><span class="line">        train_input_fn=_, eval_input_fn=...,</span><br><span class="line">        estimator=DNNClassifier(hidden_units=[<span class="number">10</span>,<span class="number">20</span>], </span><br><span class="line">        feature_columns=features,config,params))</span><br><span class="line">learn_runner.run(experiment_fn, config, ...)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/15/DL/01/" rel="next" title="Windows7 x64离线安装keras和theano">
+                <i class="fa fa-chevron-left"></i> Windows7 x64离线安装keras和theano
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/25/DL/03/" rel="prev" title="Keras自定义层传参">
+                Keras自定义层传参 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Satan" />
+            
+              <p class="site-author-name" itemprop="name">Satan</p>
+              <p class="site-description motion-element" itemprop="description">浮槎去，莫相逢~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Three-Case"><span class="nav-number">1.</span> <span class="nav-text">Three Case</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Single-Card"><span class="nav-number">1.1.</span> <span class="nav-text">Single Card</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multiple-Cards"><span class="nav-number">1.2.</span> <span class="nav-text">Multiple Cards</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multiple-Machine"><span class="nav-number">1.3.</span> <span class="nav-text">Multiple Machine</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distributed-TensorFlow"><span class="nav-number">2.</span> <span class="nav-text">Distributed TensorFlow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Motivation"><span class="nav-number">2.1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ideas"><span class="nav-number">2.2.</span> <span class="nav-text">Ideas</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Concepts"><span class="nav-number">2.3.</span> <span class="nav-text">Concepts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Operations-amp-Objects"><span class="nav-number">2.4.</span> <span class="nav-text">Operations &amp; Objects</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Replicated-training"><span class="nav-number">3.</span> <span class="nav-text">Replicated training</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Device-placement"><span class="nav-number">4.</span> <span class="nav-text">Device placement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sessions-and-servers"><span class="nav-number">5.</span> <span class="nav-text">Sessions and servers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fault-tolerance"><span class="nav-number">6.</span> <span class="nav-text">Fault tolerance</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Saver"><span class="nav-number">6.1.</span> <span class="nav-text">Saver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chief-Task"><span class="nav-number">6.2.</span> <span class="nav-text">Chief Task</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fault"><span class="nav-number">6.3.</span> <span class="nav-text">Fault</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments-and-Estimators"><span class="nav-number">7.</span> <span class="nav-text">Experiments and Estimators</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Satan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

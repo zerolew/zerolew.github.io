@@ -112,7 +112,7 @@
 
 
 
-  <meta name="keywords" content="ubuntu,hexo," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -123,18 +123,17 @@
 
 
 
-<meta name="description" content="本文主要介绍Hexo搭建个人博客过程。内容主要包括Hexo环境搭建、相关配置、主题配置、七牛图床的使用及Mathjax转义问题等。 安装Git12# 详见 https://hexo.io/docs/index.htmlsudo apt-get install git git-core Node.js1234# 详见https://github.com/creationix/nvm，具体版本（如v0">
-<meta name="keywords" content="ubuntu,hexo">
+<meta name="description" content="工具 visual studio 2015 cuda_9.0.176_windows cudnn-9.0-windows7-x64-v7 pycharm-community-2018.1.1 Miniconda3-latest-Windows-x86_64 391.35-desktop-win8-win7-64bit-international-whql  注: 显卡驱动需要根据显卡型号去NVID">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo搭建个人博客">
-<meta property="og:url" content="https://zerolew.github.io/2017/10/04/Ubuntu/Hexo搭建个人博客/index.html">
+<meta property="og:title" content="Windows7 x64离线安装keras和theano">
+<meta property="og:url" content="https://zerolew.github.io/2018/05/15/DL/01/index.html">
 <meta property="og:site_name" content="Satan’s Blog">
-<meta property="og:description" content="本文主要介绍Hexo搭建个人博客过程。内容主要包括Hexo环境搭建、相关配置、主题配置、七牛图床的使用及Mathjax转义问题等。 安装Git12# 详见 https://hexo.io/docs/index.htmlsudo apt-get install git git-core Node.js1234# 详见https://github.com/creationix/nvm，具体版本（如v0">
+<meta property="og:description" content="工具 visual studio 2015 cuda_9.0.176_windows cudnn-9.0-windows7-x64-v7 pycharm-community-2018.1.1 Miniconda3-latest-Windows-x86_64 391.35-desktop-win8-win7-64bit-international-whql  注: 显卡驱动需要根据显卡型号去NVID">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2018-05-10T16:27:44.925Z">
+<meta property="og:updated_time" content="2018-06-02T18:13:50.192Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo搭建个人博客">
-<meta name="twitter:description" content="本文主要介绍Hexo搭建个人博客过程。内容主要包括Hexo环境搭建、相关配置、主题配置、七牛图床的使用及Mathjax转义问题等。 安装Git12# 详见 https://hexo.io/docs/index.htmlsudo apt-get install git git-core Node.js1234# 详见https://github.com/creationix/nvm，具体版本（如v0">
+<meta name="twitter:title" content="Windows7 x64离线安装keras和theano">
+<meta name="twitter:description" content="工具 visual studio 2015 cuda_9.0.176_windows cudnn-9.0-windows7-x64-v7 pycharm-community-2018.1.1 Miniconda3-latest-Windows-x86_64 391.35-desktop-win8-win7-64bit-international-whql  注: 显卡驱动需要根据显卡型号去NVID">
 
 
 
@@ -164,13 +163,13 @@
 
 
 
-  <link rel="canonical" href="https://zerolew.github.io/2017/10/04/Ubuntu/Hexo搭建个人博客/"/>
+  <link rel="canonical" href="https://zerolew.github.io/2018/05/15/DL/01/"/>
 
 
 
 
 
-  <title>Hexo搭建个人博客 | Satan’s Blog</title>
+  <title>Windows7 x64离线安装keras和theano | Satan’s Blog</title>
   
 
 
@@ -341,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/10/04/Ubuntu/Hexo搭建个人博客/">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/05/15/DL/01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Satan">
@@ -358,7 +357,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hexo搭建个人博客</h1>
+          <h1 class="post-title" itemprop="name headline">Windows7 x64离线安装keras和theano</h1>
         
 
         <div class="post-meta">
@@ -370,8 +369,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-04T23:00:18+08:00">
-                2017-10-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T22:49:44+08:00">
+                2018-05-15
               </time>
             
 
@@ -380,28 +379,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ubuntu/" itemprop="url" rel="index">
-                    <span itemprop="name">ubuntu</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -430,28 +407,108 @@
       
 
       
-        <p>本文主要介绍Hexo搭建个人博客过程。内容主要包括Hexo环境搭建、相关配置、主题配置、七牛图床的使用及Mathjax转义问题等。</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 详见 https://hexo.io/docs/index.html</span></span><br><span class="line">sudo apt-get install git git-core</span><br></pre></td></tr></table></figure>
-<h4 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 详见https://github.com/creationix/nvm，具体版本（如v0.33.1）可能会变</span></span><br><span class="line">wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line">nvm install stable</span><br></pre></td></tr></table></figure>
-<h4 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Installation</span></span><br><span class="line">npm install -g hexo-cli</span><br><span class="line"><span class="comment">#　</span></span><br><span class="line"><span class="comment"># Initialization</span></span><br><span class="line">hexo init &lt;folder&gt;　<span class="comment"># &lt;folder&gt;为本地目录</span></span><br><span class="line"><span class="built_in">cd</span> &lt;folder&gt;</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="Git-1"><a href="#Git-1" class="headerlink" title="Git"></a>Git</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 在github上创建名为`username.github.io`的repository，`username`为github用户名</span></span><br><span class="line"><span class="comment"># 2. 配置git信息</span></span><br><span class="line">git config --global user.name <span class="string">"username"</span></span><br><span class="line">git config --global user.email <span class="string">"username@example.com"</span></span><br><span class="line">git config -l <span class="comment"># 查看配置</span></span><br></pre></td></tr></table></figure>
-<h4 id="SSH-keys"><a href="#SSH-keys" class="headerlink" title="SSH keys"></a>SSH keys</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 详见 https://help.github.com/articles/connecting-to-github-with-ssh/</span></span><br><span class="line"><span class="comment"># 1. 生成SSH keys</span></span><br><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line">ssh-keygen -t rsa -C <span class="string">"username@example.com"</span> <span class="comment"># 注意替换为自己的邮箱</span></span><br><span class="line"><span class="comment"># 提示输入密码和文件名时可以直接回车，密码用于项目提交</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 2. 新建SSH keys</span></span><br><span class="line"><span class="comment"># 在 https://github.com/settings/keys 中添加SSH keys</span></span><br><span class="line"><span class="comment"># Title可设为博客名，Key值为`~/.ssh/id_rsa.pub`文件中的内容</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 3. 测试SSH keys配置</span></span><br><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-<h4 id="Hexo-1"><a href="#Hexo-1" class="headerlink" title="Hexo"></a>Hexo</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 详见 https://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="comment"># 完整配置见`_config.yml`文件</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-cn</span></span><br><span class="line"><span class="attr">url:</span> <span class="attr">https://username.github.io/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br><span class="line"><span class="comment"># 此处配合SSH keys可以做到Hexo免密码部署</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repository:</span> <span class="string">git@github.com:username/username.github.io.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
-<h4 id="Theme"><a href="#Theme" class="headerlink" title="Theme"></a>Theme</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 详见 https://hexo.io/themes/</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 推荐</span></span><br><span class="line">    [NexT](https://github.com/iissnan/hexo-theme-next)</span><br><span class="line">    [Maupassant](https://github.com/tufu9441/maupassant-hexo)</span><br><span class="line">    [Jacman](https://github.com/wuchong/jacman)</span><br><span class="line">    [indigo](https://github.com/yscoder/hexo-theme-indigo)</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 笔者采用NexT主题，使用说明见[Next](http://theme-next.iissnan.com/)</span></span><br></pre></td></tr></table></figure>
-<h4 id="Qiniu"><a href="#Qiniu" class="headerlink" title="Qiniu"></a>Qiniu</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. [快速入门](https://developer.qiniu.com/kodo/manual/1233/console-quickstart)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 2. [hexo-qiniu-sync](https://github.com/gyk001/hexo-qiniu-sync)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 注： AccessKey/SecretKey在 https://portal.qiniu.com/user/key</span></span><br></pre></td></tr></table></figure>
-<h4 id="Mathjax"><a href="#Mathjax" class="headerlink" title="Mathjax"></a>Mathjax</h4><p>问题：</p>
+        <h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul>
+<li><a href="https://msdn.itellyou.cn/" target="_blank" rel="noopener">visual studio 2015</a></li>
+<li><a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">cuda_9.0.176_windows</a></li>
+<li><a href="https://developer.nvidia.com/cudnn" target="_blank" rel="noopener">cudnn-9.0-windows7-x64-v7</a></li>
+<li><a href="https://www.jetbrains.com/pycharm/download/#section=windows" target="_blank" rel="noopener">pycharm-community-2018.1.1</a></li>
+<li><a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/" target="_blank" rel="noopener">Miniconda3-latest-Windows-x86_64</a></li>
+<li><a href="https://www.nvidia.cn/Download/index.aspx" target="_blank" rel="noopener">391.35-desktop-win8-win7-64bit-international-whql</a></li>
+</ul>
+<p><em>注</em>: 显卡驱动需要根据显卡型号去NVIDIA官网下载<br><a id="more"></a></p>
+<hr>
+<h3 id="相关环境"><a href="#相关环境" class="headerlink" title="相关环境"></a>相关环境</h3><ul>
+<li>编译环境<ol>
+<li>安装visual studio 2015</li>
+</ol>
+</li>
+<li>驱动及CUDA环境<ol>
+<li>安装<code>391.35-desktop-win8-win7-64bit-international-whql</code></li>
+<li>安装<code>cuda_9.0.176_windows</code>，默认会安装到<code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0\</code></li>
+<li>解压<code>cudnn-9.0-windows7-x64-v7</code>，将解压的三个文件夹(<code>bin</code>，<code>include</code>，<code>lib</code>)拷贝到CUDA的安装路径下(该路径下存在同名文件夹，合并即可)</li>
+</ol>
+</li>
+<li>Python环境<ol>
+<li>安装<code>pycharm-community-2018.1.1</code></li>
+<li>安装<code>Miniconda3-latest-Windows-x86_64</code>(安装路径中不要有空格)</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="虚拟环境"><a href="#虚拟环境" class="headerlink" title="虚拟环境"></a>虚拟环境</h3><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><ul>
+<li><p>镜像配置</p>
+<ol>
+<li><p><a href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/" target="_blank" rel="noopener">anaconda mirror</a></p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/</span><br><span class="line">conda config --<span class="built_in">set</span> show_channel_urls yes</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://mirrors.tuna.tsinghua.edu.cn/help/pypi/" target="_blank" rel="noopener">pypi mirror</a></p>
+<ol>
+<li>配置文件路径<ul>
+<li>Linux: ~/.config/pip/pip.conf</li>
+<li>Windows: %APPDATA%\pip\pip.ini</li>
+<li>Mac: $HOME/Library/Application Support/pip/pip.conf</li>
+</ul>
+</li>
+<li>在配置文件中添加内容 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><em>注</em>: </p>
+</li>
+</ol>
 <ul>
-<li><code>_</code>的转义，在markdown中，<code>_</code>是斜体，但是在latex中，却有下标的意思，就会出现问题。</li>
-<li><code>\\</code>的换行，在markdown中，<code>\\</code>会被转义为<code>\</code>，这样也会影响影响mathjax对公式中的<code>\\</code>进行渲染。</li>
+<li>镜像配置主要解决国内下载相关包速度慢的问题</li>
+<li>除了清华镜像源，还有阿里云镜像源、上交镜像源等</li>
 </ul>
-<p>方法： 修改<code>nodes_modules/marked/lib/marked.js</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将</span></span><br><span class="line"><span class="built_in">escape</span>: <span class="regexp">/^\\([\\`*&#123;&#125;\[\]()# +\-.!_&gt;])/</span>,</span><br><span class="line"><span class="comment">// 改为</span></span><br><span class="line"><span class="built_in">escape</span>: <span class="regexp">/^\\([`*&#123;&#125;\[\]()# +\-.!_&gt;])/</span>,</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// 将</span></span><br><span class="line">em: <span class="regexp">/^\b_((?:[^_]|__)+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br><span class="line"><span class="comment">// 改为</span></span><br><span class="line">em:<span class="regexp">/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br></pre></td></tr></table></figure></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a></li>
-<li><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">Next</a></li>
-<li><a href="http://yuchen-lea.github.io/2016-01-21-use-qiniu-store-file-for-hexo/" target="_blank" rel="noopener">Qiniu</a></li>
-<li><a href="http://shomy.top/2016/10/22/hexo-markdown-mathjax/" target="_blank" rel="noopener">Mathjax</a></li>
+</li>
+<li><p>用户环境变量配置</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONDA_PATH=D:\Miniconda3;D:\Miniconda3\Scripts;D:\Miniconda3\MinGW\bin;D:\Miniconda3\MinGW\x86_64-w64-mingw32;</span><br><span class="line"></span><br><span class="line">VS2015_PATH=D:\Program Files\Microsoft Visual Studio 14.0\VC\bin;D:\Program Files\Microsoft Visual Studio 14.0\VC\bin\amd64;</span><br><span class="line"></span><br><span class="line">PATH=%CONDA_PATH%;%VS2015_PATH%;</span><br></pre></td></tr></table></figure>
+<p>  <em>注</em>: </p>
+<ul>
+<li>环境变量配置需要根据个人安装相关软件的具体情况而定</li>
+<li><code>D:\Miniconda3\MinGW</code>文件夹本身不存在，需由下文的<code>conda install mingw</code>命令生成</li>
 </ul>
+</li>
+</ul>
+<h4 id="在线环境搭建"><a href="#在线环境搭建" class="headerlink" title="在线环境搭建"></a>在线环境搭建</h4><ol>
+<li><p><a href="http://deeplearning.net/software/theano/install_windows.html" target="_blank" rel="noopener">theano</a></p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">conda insatll mingw</span><br><span class="line">conda create -n theano python=<span class="number">3</span>.<span class="number">5</span></span><br><span class="line"></span><br><span class="line">activate theano</span><br><span class="line">conda install numpy scipy mkl-service libpython m2w64-toolchain</span><br><span class="line">conda install theano pygpu</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://keras.io/#installation" target="_blank" rel="noopener">keras</a></p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">conda create -n tensorflow python=<span class="number">3</span>.<span class="number">5</span></span><br><span class="line">activate tensorflow</span><br><span class="line"></span><br><span class="line">python -m pip install -U pip</span><br><span class="line">pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ -U tensorflow-gpu</span><br><span class="line">pip3 install h5py graphviz pydot</span><br><span class="line">pip3 install keras</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><em>注</em>: 可以在<code>https://mirrors.tuna.tsinghua.edu.cn/help/tensorflow/</code>中查找特定版本的tensorflow</p>
+<h3 id="离线环境搭建"><a href="#离线环境搭建" class="headerlink" title="离线环境搭建"></a>离线环境搭建</h3><h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><ul>
+<li>方法一: 在线搭建好虚拟环境，将安装好的虚拟环境文件夹(如<code>D:\Miniconda3\envs\tensorflow</code>)拷贝到离线机的对应文件夹中</li>
+<li>方法二: 在联网机上获取离线安装包，拷贝到离线环境中进行安装</li>
+</ul>
+<p><em>注</em>: </p>
+<ol>
+<li>方法一需要联网机和离线机的配置及相关环境类似 </li>
+<li>方法二中的离线安装包可以通过下文方法快速获得</li>
+</ol>
+<h4 id="离线安装包的获取"><a href="#离线安装包的获取" class="headerlink" title="离线安装包的获取"></a>离线安装包的获取</h4><ol>
+<li>通过conda命令安装的包放在<code>D:\Miniconda3\pkgs</code>中，在线安装时可以手动保存安装的包到其他目录下</li>
+<li><p>通过pip命令安装的包可以通过命令获得</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br><span class="line">pip install --download C:\Users\Admin\Desktop\packages -r requirements.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行上述命令后，在线环境中通过pip命令安装的包会下载到<code>C:\Users\Admin\Desktop\packages</code>中</p>
+</li>
+</ol>
+<p><em>注</em>: </p>
+<ol>
+<li>通过pip获取在虚拟环境中安装的包时，需要先激活该环境(如<code>activate tensorflow</code>)</li>
+<li>可以通过<code>pip freeze --help</code>命令查看其相关用法</li>
+</ol>
+<h4 id="离线安装包的安装"><a href="#离线安装包的安装" class="headerlink" title="离线安装包的安装"></a>离线安装包的安装</h4><ol>
+<li><p>conda下载的包可以用以下命令安装</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install --offline C:\Users\Admin\Desktop\packages\numpy-<span class="number">1</span>.<span class="number">12</span>.<span class="number">1</span>-py36_0.tar.bz2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pip下载的包可以用以下命令安装</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install --no-index --<span class="built_in">find</span>-links=C:\Users\Admin\Desktop\packages -r requirements.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><em>注</em>: 可以写脚本生成conda离线安装命令<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">package_path = <span class="string">"packages/"</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"install.bat"</span>,<span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    files = [os.path.join(package_path，filename) <span class="keyword">for</span> filename <span class="keyword">in</span> sorted(list(os.listdir(package_path)))</span><br><span class="line">            <span class="keyword">if</span> os.path.isfile(os.path.join(package_path，filename)) <span class="keyword">and</span> filename.endswith(<span class="string">'.tar.bz2'</span>)]</span><br><span class="line">    <span class="keyword">for</span> filepath <span class="keyword">in</span> files:</span><br><span class="line">        print(<span class="string">"conda install --offline "</span>,filepath,file=f)</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -467,14 +524,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
-          
-            <a href="/tags/hexo/" rel="tag"># hexo</a>
-          
-        </div>
-      
 
       
       
@@ -484,8 +533,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/03/Ubuntu/Ubuntu 16.04软件安装/" rel="next" title="Ubuntu 16.04软件安装">
-                <i class="fa fa-chevron-left"></i> Ubuntu 16.04软件安装
+              <a href="/2017/11/03/ML/Imbalanced Learning/Sampling Methods/" rel="next" title="采样方法">
+                <i class="fa fa-chevron-left"></i> 采样方法
               </a>
             
           </div>
@@ -494,8 +543,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/05/ML/不均衡数据的处理/" rel="prev" title="不均衡数据的处理">
-                不均衡数据的处理 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/15/DL/02/" rel="prev" title="TensorFlow 分布式训练">
+                TensorFlow 分布式训练 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -634,7 +683,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Git"><span class="nav-number">1.1.</span> <span class="nav-text">Git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js"><span class="nav-number">1.2.</span> <span class="nav-text">Node.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hexo"><span class="nav-number">1.3.</span> <span class="nav-text">Hexo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Git-1"><span class="nav-number">2.1.</span> <span class="nav-text">Git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSH-keys"><span class="nav-number">2.2.</span> <span class="nav-text">SSH keys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hexo-1"><span class="nav-number">2.3.</span> <span class="nav-text">Hexo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Theme"><span class="nav-number">2.4.</span> <span class="nav-text">Theme</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Qiniu"><span class="nav-number">2.5.</span> <span class="nav-text">Qiniu</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mathjax"><span class="nav-number">2.6.</span> <span class="nav-text">Mathjax</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#工具"><span class="nav-number">1.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关环境"><span class="nav-number">2.</span> <span class="nav-text">相关环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟环境"><span class="nav-number">3.</span> <span class="nav-text">虚拟环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-number">3.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在线环境搭建"><span class="nav-number">3.2.</span> <span class="nav-text">在线环境搭建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#离线环境搭建"><span class="nav-number">4.</span> <span class="nav-text">离线环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-number">4.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#离线安装包的获取"><span class="nav-number">4.2.</span> <span class="nav-text">离线安装包的获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#离线安装包的安装"><span class="nav-number">4.3.</span> <span class="nav-text">离线安装包的安装</span></a></li></ol></li></ol></div>
             
 
           </div>
