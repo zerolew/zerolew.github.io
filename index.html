@@ -340,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/05/25/DL/04/">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/06/17/DL/TensorFlow/01_tf.data.Dataset/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Satan">
@@ -359,7 +359,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/25/DL/04/" itemprop="url">网络训练实用代码片段</a></h1>
+                <a class="post-title-link" href="/2018/06/17/DL/TensorFlow/01_tf.data.Dataset/" itemprop="url">tf.data.Dataset</a></h1>
         
 
         <div class="post-meta">
@@ -371,8 +371,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-25T23:11:42+08:00">
-                2018-05-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-17T23:49:36+08:00">
+                2018-06-17
               </time>
             
 
@@ -381,6 +381,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TensorFlow/" itemprop="url" rel="index">
+                    <span itemprop="name">TensorFlow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -410,711 +432,72 @@
 
       
         
-          <h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><h4 id="logging"><a href="#logging" class="headerlink" title="logging"></a>logging</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">file_handler = logging.FileHandler(filename=<span class="string">'tmp.log'</span>)</span><br><span class="line">stdout_handler = logging.StreamHandler(sys.stdout)</span><br><span class="line">handlers = [file_handler, stdout_handler]</span><br><span class="line"></span><br><span class="line">logging.basicConfig(</span><br><span class="line">    level=logging.DEBUG, </span><br><span class="line">    format=<span class="string">'[%(asctime)s] &#123;%(filename)s:%(lineno)d&#125; %(levelname)s - %(message)s'</span>,</span><br><span class="line">    handlers=handlers</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">logger = logging.getLogger(<span class="string">'LOGGER_NAME'</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="stdout"><a href="#stdout" class="headerlink" title="stdout"></a>stdout</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">loggers_dir = os.path.join(os.getcwd(), <span class="string">'loggers'</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(loggers_dir):</span><br><span class="line">    os.makedirs(loggers_dir)</span><br><span class="line">logger_path = os.path.join(loggers_dir, model_name + <span class="string">".log"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># redirect output to file</span></span><br><span class="line">saved_stdout = sys.stdout</span><br><span class="line"><span class="keyword">with</span> open(logger_path, <span class="string">"a+"</span>, <span class="number">1</span>) <span class="keyword">as</span> logger_file:</span><br><span class="line">    sys.stdout = logger_file</span><br><span class="line"></span><br><span class="line">    <span class="comment"># do something</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># restore stdout</span></span><br><span class="line">sys.stdout = saved_stdout</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/25/DL/04/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/05/25/DL/03/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Satan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Satan’s Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/25/DL/03/" itemprop="url">Keras自定义层传参</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-25T23:10:42+08:00">
-                2018-05-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Keras自定义层的传参方式主要有三种：</p>
+            <h1 id="Generic-Overview"><a href="#Generic-Overview" class="headerlink" title="Generic Overview"></a>Generic Overview</h1><p>In order to use a Dataset we need three steps:</p>
 <ul>
-<li>在其<code>call</code>方法中传入<code>Input</code>类型的参数</li>
-<li>在其<code>call</code>方法中传入<code>list</code>类型的参数</li>
-<li>在其<code>__init__</code>方法中传入参数</li>
+<li><strong>Importing Data.</strong> Create a Dataset instance from some data</li>
+<li><strong>Create an Iterator.</strong> By using the created dataset to make an Iterator instance to iterate thought the dataset</li>
+<li><strong>Consuming Data.</strong> By using the created iterator we can get the elements from the dataset to feed the model</li>
 </ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/25/DL/03/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/05/15/DL/02/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Satan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Satan’s Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/15/DL/02/" itemprop="url">TensorFlow 分布式训练</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T23:01:42+08:00">
-                2018-05-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="Three-Case"><a href="#Three-Case" class="headerlink" title="Three Case"></a>Three Case</h3><p>深度学习模型训练中，根据设备配置情况，可以分为单机单卡、单机多卡、多机等情况，以下是其代码示例。</p>
-<h4 id="Single-Card"><a href="#Single-Card" class="headerlink" title="Single Card"></a>Single Card</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一般是参数定义在cpu上，计算图定义在gpu上</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/cpu:0"</span>):</span><br><span class="line">    W = tf.Variable(...)</span><br><span class="line">    b = tf.Variable(...)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/gpu:0"</span>):</span><br><span class="line">    output = tf.matmul(input, W) + b</span><br><span class="line">    loss = f(output)</span><br></pre></td></tr></table></figure>
-<h4 id="Multiple-Cards"><a href="#Multiple-Cards" class="headerlink" title="Multiple Cards"></a>Multiple Cards</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一般是参数定义在cpu上，计算图分散定义在gpu上</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/cpu:0"</span>):</span><br><span class="line">    weights_1 = tf.Variable(...)</span><br><span class="line">    biases_1 = tf.Variable(...)</span><br><span class="line"></span><br><span class="line">    weights_2 = tf.Variable(...)</span><br><span class="line">    biases_2 = tf.Variable(...)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/gpu:0"</span>):</span><br><span class="line">    layer_1 = tf.nn.relu(tf.matmul(input, weights_1) + biases_1)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/gpu:1"</span>):</span><br><span class="line">    output = tf.matmul(layer_1, weights_2) + biases_2</span><br><span class="line">    loss = f(output)</span><br></pre></td></tr></table></figure>
-<h4 id="Multiple-Machine"><a href="#Multiple-Machine" class="headerlink" title="Multiple Machine"></a>Multiple Machine</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用gRPC在进程间传输tensor</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:ps/task:0/cpu:0"</span>):</span><br><span class="line">    W = tf.Variable(...)</span><br><span class="line">    b = tf.Variable(...)</span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/job:worker/task:0/gpu:0"</span>):</span><br><span class="line">    output = tf.matmul(input, W) + b</span><br><span class="line">    loss = f(output)</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/15/DL/02/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/05/15/DL/01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Satan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Satan’s Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/15/DL/01/" itemprop="url">Windows7 x64离线安装keras和theano</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T22:49:44+08:00">
-                2018-05-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul>
-<li><a href="https://msdn.itellyou.cn/" target="_blank" rel="noopener">visual studio 2015</a></li>
-<li><a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">cuda_9.0.176_windows</a></li>
-<li><a href="https://developer.nvidia.com/cudnn" target="_blank" rel="noopener">cudnn-9.0-windows7-x64-v7</a></li>
-<li><a href="https://www.jetbrains.com/pycharm/download/#section=windows" target="_blank" rel="noopener">pycharm-community-2018.1.1</a></li>
-<li><a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/" target="_blank" rel="noopener">Miniconda3-latest-Windows-x86_64</a></li>
-<li><a href="https://www.nvidia.cn/Download/index.aspx" target="_blank" rel="noopener">391.35-desktop-win8-win7-64bit-international-whql</a></li>
+<h2 id="Importing-Data"><a href="#Importing-Data" class="headerlink" title="Importing Data"></a>Importing Data</h2><ul>
+<li><p><strong>From numpy array</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a random vector of shape (100,2)</span></span><br><span class="line">x = np.random.sample((<span class="number">100</span>,<span class="number">2</span>))</span><br><span class="line"><span class="comment"># make a dataset from a numpy array</span></span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices(x)</span><br><span class="line"></span><br><span class="line">features, labels = (np.random.sample((<span class="number">100</span>,<span class="number">2</span>)), np.random.sample((<span class="number">100</span>,<span class="number">1</span>)))</span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices((features,labels))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>From tensors</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># using a tensor</span></span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices(tf.random_uniform([<span class="number">100</span>, <span class="number">2</span>]))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>From a placeholder</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>,<span class="number">2</span>])</span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices(x)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>From generator</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># from generator</span></span><br><span class="line"><span class="comment"># useful when we have an array of different elements length</span></span><br><span class="line">sequence = np.array([[[<span class="number">1</span>]],[[<span class="number">2</span>],[<span class="number">3</span>]],[[<span class="number">3</span>],[<span class="number">4</span>],[<span class="number">5</span>]]])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator</span><span class="params">()</span>:</span></span><br><span class="line"><span class="keyword">for</span> el <span class="keyword">in</span> sequence:</span><br><span class="line">    <span class="keyword">yield</span> el</span><br><span class="line">dataset = tf.data.Dataset().batch(<span class="number">1</span>).from_generator(generator,</span><br><span class="line">                                       output_types= tf.int64,</span><br><span class="line">                                       output_shapes=(tf.TensorShape([<span class="keyword">None</span>, <span class="number">1</span>])))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>From csv file</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># load a csv</span></span><br><span class="line">CSV_PATH = <span class="string">'./tweets.csv'</span></span><br><span class="line">dataset = tf.contrib.data.make_csv_dataset(CSV_PATH, batch_size=<span class="number">32</span>)</span><br><span class="line">iter = dataset.make_one_shot_iterator()</span><br><span class="line">next = iter.get_next()</span><br><span class="line">print(next) <span class="comment"># next is a dict with key=columns names and value=column data</span></span><br><span class="line">inputs, labels = next[<span class="string">'text'</span>], next[<span class="string">'sentiment'</span>]</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<p><em>注</em>: 显卡驱动需要根据显卡型号去NVIDIA官网下载<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/15/DL/01/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/11/03/ML/Imbalanced Learning/Sampling Methods/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Satan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Satan’s Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/03/ML/Imbalanced Learning/Sampling Methods/" itemprop="url">采样方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T16:41:28+08:00">
-                2017-11-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/Imbalanced-Learning/" itemprop="url" rel="index">
-                    <span itemprop="name">Imbalanced Learning</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本文旨在回顾论文<a href="https://arxiv.org/abs/1608.06048" title="Survey of resampling techniques for improving classification performance in unbalanced datasets" target="_blank" rel="noopener">Survey of resampling techniques for improving classification performance in unbalanced datasets</a>。该论文中，Ajinkya More回顾了以往文献中提出的一些重采样技术，用其处理人工合成的不均衡数据集，并研究各种技术对分类性能的影响。论文中关于欠采样和过采样方法总结比较全面，算法描述清晰，实验配图丰富。论文中提及的算法见下图：<img title="Resampling Techniques" src="http://oydrxt8yx.bkt.clouddn.com/images//ML/Resampling.png"> 论文中关于CNN算法的描述，个人比较推荐看<a href="http://www.math.le.ac.uk/people/ag153/homepage/KNN/KNN3.html#L7" title="CNN for data reduction" target="_blank" rel="noopener">CNN for data reduction</a>; 关于EasyEnsemble和BalanceCascade算法的描述，个人推荐看原始论文<a href="https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/tsmcb09.pdf" title="Exploratory Undersampling for Class-Imbalance Learning" target="_blank" rel="noopener">Exploratory Undersampling for Class-Imbalance Learning</a>。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/03/ML/Imbalanced Learning/Sampling Methods/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/11/01/Algorithm/Bloom Filter/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Satan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Satan’s Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/01/Algorithm/Bloom Filter/" itemprop="url">Bloom Filter</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-01T20:04:14+08:00">
-                2017-11-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>布隆过滤器是:</p>
+<h2 id="Create-an-Iterator"><a href="#Create-an-Iterator" class="headerlink" title="Create an Iterator"></a>Create an Iterator</h2><p>Four Types:</p>
 <ul>
-<li>一种概率型数据结构;</li>
-<li>用于检索元素是否属于某集合;</li>
-<li>优点:高空间效率、低错误率、高查询效率;</li>
-<li>缺点:存在误识别情况(false positive)、删除困难;
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/01/Algorithm/Bloom Filter/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<li><strong>One shot.</strong> It can iterate once through a dataset, you <strong>cannot feed</strong> any value to it.</li>
+<li><strong>Initializable</strong>: You can dynamically change calling its <code>initializer</code> operation and passing the new data with <code>feed_dict</code>. It’s basically a bucket that you can fill with stuff.</li>
+<li><strong>Reinitializable</strong>: It can be initialised from different <code>Dataset</code>. Very useful when you have a training dataset that needs some additional transformation, eg. shuffle, and a testing dataset. It’s like using a tower crane to select different container.</li>
+<li><strong>Feedable</strong>: It can be used to select with iterator to use. Following the previous example, it’s like a tower crane that selects which tower crane to use to select which container to take. In my opinion is useless.</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><p><strong>One shot Iterator</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x = np.random.sample((<span class="number">100</span>,<span class="number">2</span>))</span><br><span class="line"><span class="comment"># make a dataset from a numpy array</span></span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices(x)</span><br><span class="line"><span class="comment"># create the iterator</span></span><br><span class="line">iter = dataset.make_one_shot_iterator()</span><br><span class="line">el = iter.get_next()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Initializable Iterator</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># feed data</span></span><br><span class="line">data = np.random.sample((<span class="number">100</span>,<span class="number">2</span>))</span><br><span class="line"><span class="comment"># using a placeholder</span></span><br><span class="line">x = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>,<span class="number">2</span>])</span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices(x)</span><br><span class="line">iter = dataset.make_initializable_iterator() <span class="comment"># create the iterator</span></span><br><span class="line">el = iter.get_next()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="comment"># feed the placeholder with data</span></span><br><span class="line">    sess.run(iter.initializer, feed_dict=&#123; x: data &#125;)</span><br><span class="line">    print(sess.run(el)) <span class="comment"># output [ 0.52374458  0.71968478]</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a real common scenario with train set and test set</span></span><br><span class="line">train_data = (np.random.sample((<span class="number">100</span>,<span class="number">2</span>)), np.random.sample((<span class="number">100</span>,<span class="number">1</span>)))</span><br><span class="line">test_data = (np.array([[<span class="number">1</span>,<span class="number">2</span>]]), np.array([[<span class="number">0</span>]]))</span><br><span class="line"><span class="comment"># initializable iterator to switch between dataset</span></span><br><span class="line">EPOCHS = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">x = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>,<span class="number">2</span>])</span><br><span class="line">y = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>,<span class="number">1</span>])</span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices((x, y))</span><br><span class="line"></span><br><span class="line">iter = dataset.make_initializable_iterator()</span><br><span class="line">features, labels = iter.get_next()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="comment"># initialise iterator with train data</span></span><br><span class="line">    sess.run(iter.initializer, feed_dict=&#123; x: train_data[<span class="number">0</span>], y: train_data[<span class="number">1</span>]&#125;)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(EPOCHS):</span><br><span class="line">        sess.run([features, labels])</span><br><span class="line">    <span class="comment"># switch to test data</span></span><br><span class="line">    sess.run(iter.initializer, feed_dict=&#123; x: test_data[<span class="number">0</span>], y: test_data[<span class="number">1</span>]&#125;)</span><br><span class="line">    print(sess.run([features, labels]))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Reinitializable Iterator</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reinitializable iterator to switch between Datasets</span></span><br><span class="line">EPOCHS = <span class="number">10</span></span><br><span class="line"><span class="comment"># making fake data using numpy</span></span><br><span class="line">train_data = (np.random.sample((<span class="number">100</span>,<span class="number">2</span>)), np.random.sample((<span class="number">100</span>,<span class="number">1</span>)))</span><br><span class="line">test_data = (np.random.sample((<span class="number">10</span>,<span class="number">2</span>)), np.random.sample((<span class="number">10</span>,<span class="number">1</span>)))</span><br><span class="line"><span class="comment"># create two datasets, one for training and one for test</span></span><br><span class="line">train_dataset = tf.data.Dataset.from_tensor_slices(train_data)</span><br><span class="line">test_dataset = tf.data.Dataset.from_tensor_slices(test_data)</span><br><span class="line"><span class="comment"># create a generic iterator of the correct shape and type</span></span><br><span class="line">iter = tf.data.Iterator.from_structure(train_dataset.output_types,</span><br><span class="line">                                        train_dataset.output_shapes)</span><br><span class="line">features, labels = iter.get_next()</span><br><span class="line"><span class="comment"># create the initialisation operations</span></span><br><span class="line">train_init_op = iter.make_initializer(train_dataset)</span><br><span class="line">test_init_op = iter.make_initializer(test_dataset)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(train_init_op) <span class="comment"># switch to train dataset</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(EPOCHS):</span><br><span class="line">        sess.run([features, labels])</span><br><span class="line">    sess.run(test_init_op) <span class="comment"># switch to val dataset</span></span><br><span class="line">    print(sess.run([features, labels]))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Feedable Iterator</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># feedable iterator to switch between iterators</span></span><br><span class="line">EPOCHS = <span class="number">10</span></span><br><span class="line"><span class="comment"># making fake data using numpy</span></span><br><span class="line">train_data = (np.random.sample((<span class="number">100</span>,<span class="number">2</span>)), np.random.sample((<span class="number">100</span>,<span class="number">1</span>)))</span><br><span class="line">test_data = (np.random.sample((<span class="number">10</span>,<span class="number">2</span>)), np.random.sample((<span class="number">10</span>,<span class="number">1</span>)))</span><br><span class="line"><span class="comment"># create placeholder</span></span><br><span class="line">x = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>,<span class="number">2</span>])</span><br><span class="line">y = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>,<span class="number">1</span>])</span><br><span class="line"><span class="comment"># create two datasets, one for training and one for test</span></span><br><span class="line">train_dataset = tf.data.Dataset.from_tensor_slices((x,y))</span><br><span class="line">test_dataset = tf.data.Dataset.from_tensor_slices((x,y))</span><br><span class="line"><span class="comment"># create the iterators from the dataset</span></span><br><span class="line">train_iterator = train_dataset.make_initializable_iterator()</span><br><span class="line">test_iterator = test_dataset.make_initializable_iterator()</span><br><span class="line"><span class="comment"># same as in the doc https://www.tensorflow.org/programmers_guide/datasets#creating_an_iterator</span></span><br><span class="line">handle = tf.placeholder(tf.string, shape=[])</span><br><span class="line">iter = tf.data.Iterator.from_string_handle(</span><br><span class="line">    handle, train_dataset.output_types, train_dataset.output_shapes)</span><br><span class="line">next_elements = iter.get_next()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    train_handle = sess.run(train_iterator.string_handle())</span><br><span class="line">    test_handle = sess.run(test_iterator.string_handle())</span><br><span class="line">    <span class="comment"># initialise iterators.</span></span><br><span class="line">    sess.run(train_iterator.initializer, feed_dict=&#123; x: train_data[<span class="number">0</span>], y: train_data[<span class="number">1</span>]&#125;)</span><br><span class="line">    sess.run(test_iterator.initializer, feed_dict=&#123; x: test_data[<span class="number">0</span>], y: test_data[<span class="number">1</span>]&#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(EPOCHS):</span><br><span class="line">        x,y = sess.run(next_elements, feed_dict = &#123;handle: train_handle&#125;)</span><br><span class="line">        print(x, y)</span><br><span class="line"></span><br><span class="line">    x,y = sess.run(next_elements, feed_dict = &#123;handle: test_handle&#125;)</span><br><span class="line">    print(x,y)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Consuming-data"><a href="#Consuming-data" class="headerlink" title="Consuming data"></a>Consuming data</h2><ul>
+<li><p><strong>Initializable iterator</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Wrapping all together -&gt; Switch between train and test set using Initializable iterator</span></span><br><span class="line">EPOCHS = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># using two numpy arrays</span></span><br><span class="line">train_data = (np.random.sample((<span class="number">100</span>,<span class="number">2</span>)), np.random.sample((<span class="number">100</span>,<span class="number">1</span>)))</span><br><span class="line">test_data = (np.random.sample((<span class="number">20</span>,<span class="number">2</span>)), np.random.sample((<span class="number">20</span>,<span class="number">1</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># create a placeholder to dynamically switch between batch sizes</span></span><br><span class="line">batch_size = tf.placeholder(tf.int64)</span><br><span class="line">x = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>,<span class="number">2</span>])</span><br><span class="line">y = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices((x, y)).batch(batch_size).repeat()</span><br><span class="line">iter = dataset.make_initializable_iterator()</span><br><span class="line">features, labels = iter.get_next()</span><br><span class="line"></span><br><span class="line"><span class="comment"># make a simple model</span></span><br><span class="line">net = tf.layers.dense(features, <span class="number">8</span>, activation=tf.tanh) <span class="comment"># pass the first value from iter.get_next() as input</span></span><br><span class="line">net = tf.layers.dense(net, <span class="number">8</span>, activation=tf.tanh)</span><br><span class="line">prediction = tf.layers.dense(net, <span class="number">1</span>, activation=tf.tanh)</span><br><span class="line"></span><br><span class="line">loss = tf.losses.mean_squared_error(prediction, labels) <span class="comment"># pass the second value from iter.get_net() as label</span></span><br><span class="line">train_op = tf.train.AdamOptimizer().minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    <span class="comment"># initialise iterator with train data</span></span><br><span class="line">    sess.run(iter.initializer, feed_dict=&#123; x: train_data[<span class="number">0</span>], y: train_data[<span class="number">1</span>], batch_size: BATCH_SIZE&#125;)</span><br><span class="line">    print(<span class="string">'Training...'</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(EPOCHS):</span><br><span class="line">        tot_loss = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(n_batches):</span><br><span class="line">            _, loss_value = sess.run([train_op, loss])</span><br><span class="line">            tot_loss += loss_value</span><br><span class="line">        print(<span class="string">"Iter: &#123;&#125;, Loss: &#123;:.4f&#125;"</span>.format(i, tot_loss / n_batches))</span><br><span class="line">    <span class="comment"># initialise iterator with test data</span></span><br><span class="line">    sess.run(iter.initializer, feed_dict=&#123; x: test_data[<span class="number">0</span>], y: test_data[<span class="number">1</span>], batch_size: test_data[<span class="number">0</span>].shape[<span class="number">0</span>]&#125;)</span><br><span class="line">    print(<span class="string">'Test Loss: &#123;:4f&#125;'</span>.format(sess.run(loss)))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Reinitializable Iterator</strong></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Wrapping all together -&gt; Switch between train and test set using Reinitializable iterator</span></span><br><span class="line">EPOCHS = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># using two numpy arrays</span></span><br><span class="line">train_data = (np.random.sample((<span class="number">100</span>,<span class="number">2</span>)), np.random.sample((<span class="number">100</span>,<span class="number">1</span>)))</span><br><span class="line">test_data = (np.random.sample((<span class="number">20</span>,<span class="number">2</span>)), np.random.sample((<span class="number">20</span>,<span class="number">1</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># create a placeholder to dynamically switch between batch sizes</span></span><br><span class="line">batch_size = tf.placeholder(tf.int64)</span><br><span class="line">x = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>,<span class="number">2</span>])</span><br><span class="line">y = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">train_dataset = tf.data.Dataset.from_tensor_slices((x,y)).batch(batch_size).repeat()</span><br><span class="line">test_dataset = tf.data.Dataset.from_tensor_slices((x,y)).batch(batch_size) <span class="comment"># always batch even if you want to one shot it</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># create a iterator of the correct shape and type</span></span><br><span class="line">iter = tf.data.Iterator.from_structure(train_dataset.output_types, train_dataset.output_shapes)</span><br><span class="line">features, labels = iter.get_next()</span><br><span class="line"><span class="comment"># create the initialisation operations</span></span><br><span class="line">train_init_op = iter.make_initializer(train_dataset)</span><br><span class="line">test_init_op = iter.make_initializer(test_dataset)</span><br><span class="line"></span><br><span class="line"><span class="comment"># make a simple model</span></span><br><span class="line">net = tf.layers.dense(features, <span class="number">8</span>, activation=tf.tanh) <span class="comment"># pass the first value from iter.get_next() as input</span></span><br><span class="line">net = tf.layers.dense(net, <span class="number">8</span>, activation=tf.tanh)</span><br><span class="line">prediction = tf.layers.dense(net, <span class="number">1</span>, activation=tf.tanh)</span><br><span class="line"></span><br><span class="line">loss = tf.losses.mean_squared_error(prediction, labels) <span class="comment"># pass the second value from iter.get_net() as label</span></span><br><span class="line">train_op = tf.train.AdamOptimizer().minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    <span class="comment"># initialise iterator with train data</span></span><br><span class="line">    sess.run(train_init_op, feed_dict = &#123;x : train_data[<span class="number">0</span>], y: train_data[<span class="number">1</span>], batch_size: <span class="number">16</span>&#125;)</span><br><span class="line">    print(<span class="string">'Training...'</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(EPOCHS):</span><br><span class="line">        tot_loss = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(n_batches):</span><br><span class="line">            _, loss_value = sess.run([train_op, loss])</span><br><span class="line">            tot_loss += loss_value</span><br><span class="line">        print(<span class="string">"Iter: &#123;&#125;, Loss: &#123;:.4f&#125;"</span>.format(i, tot_loss / n_batches))</span><br><span class="line">    <span class="comment"># initialise iterator with test data</span></span><br><span class="line">    sess.run(test_init_op, feed_dict = &#123;x : test_data[<span class="number">0</span>], y: test_data[<span class="number">1</span>], batch_size:len(test_data[<span class="number">0</span>])&#125;)</span><br><span class="line">    print(<span class="string">'Test Loss: &#123;:4f&#125;'</span>.format(sess.run(loss)))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Useful-Stuff"><a href="#Useful-Stuff" class="headerlink" title="Useful Stuff"></a>Useful Stuff</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ~150 images/sec</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">input_fn</span><span class="params">(batch_size)</span>:</span></span><br><span class="line">    files = tf.data.Dataset.list_files(FLAGS.data_dir)</span><br><span class="line">    dataset = tf.data.TFRecordDataset(files)</span><br><span class="line">    dataset = dataset.shuffle(<span class="number">2048</span>) <span class="comment"># Sliding window of 2048 records</span></span><br><span class="line">    dataset = dataset.repeat(NUM_EPOCHS)</span><br><span class="line">    <span class="comment"># parser_fn includes: (1) Parse tf.Example (2) jpeg decodes (3) random crop &amp; flip (4) color transformations</span></span><br><span class="line">    dataset = dataset.map(parser_fn).batch(batch_size)</span><br><span class="line">    <span class="keyword">return</span> dataset</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &gt; 600 images/sec</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">input_fn</span><span class="params">(batch_size)</span>:</span></span><br><span class="line">    files = tf.data.Dataset.list_files(FLAGS.data_dir)</span><br><span class="line">    dataset = tf.data.TFRecordDataset(files)</span><br><span class="line">    dataset = dataset.shuffle(<span class="number">2048</span>) <span class="comment"># Sliding window of 2048 records</span></span><br><span class="line">    dataset = dataset.repeat(NUM_EPOCHS)</span><br><span class="line">    <span class="comment"># parser_fn includes: (1) Parse tf.Example (2) jpeg decodes (3) random crop &amp; flip (4) color transformations</span></span><br><span class="line">    <span class="comment"># parallelize across many cores!</span></span><br><span class="line">    dataset = dataset.map(parser_fn, num_parallel_calls=<span class="number">64</span>)</span><br><span class="line">    dataset = dataset.batch(batch_size)</span><br><span class="line">    <span class="keyword">return</span> dataset</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &gt; 1750 images/sec</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">input_fn</span><span class="params">(batch_size)</span>:</span></span><br><span class="line">    <span class="comment"># TFRecordDataset uses tf.contrib.data parallel_interleave under the hood</span></span><br><span class="line">    files = tf.data.Dataset.list_files(FLAGS.data_dir, num_parallel_reads=<span class="number">32</span>)</span><br><span class="line">    dataset = tf.data.TFRecordDataset(files)</span><br><span class="line">    dataset = dataset.shuffle(<span class="number">10000</span>)</span><br><span class="line">    dataset = dataset.repeat(NUM_EPOCHS)</span><br><span class="line">    dataset = dataset.map(parser_fn, num_parallel_calls=<span class="number">64</span>)</span><br><span class="line">    dataset = dataset.batch(batch_size)</span><br><span class="line">    <span class="comment"># Prefetch @ end to ensure everything above is pipelined with the accelerator training.</span></span><br><span class="line">    <span class="comment"># Large pretch buffers also smooth over latency variablity.</span></span><br><span class="line">    dataset = dataset.prefetch(<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> dataset</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &gt; 2000 images/sec</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">input_fn</span><span class="params">(batch_size)</span>:</span></span><br><span class="line">    files = tf.data.Dataset.list_files(FLAGS.data_dir, num_parallel_reads=<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tfrecord_dataset</span><span class="params">(filename)</span>:</span></span><br><span class="line">        buffer_size = <span class="number">8</span> * <span class="number">1024</span> * <span class="number">1024</span> <span class="comment"># 8 MB per file</span></span><br><span class="line">        <span class="keyword">return</span> tf.data.TFRecordDataset(filename, buffer_size=buffer_size)</span><br><span class="line"></span><br><span class="line">    dataset = files.apply(tf.contrib.data.parallel_inter_leave(tfrecord_dataset, cycle_length=<span class="number">32</span>, sloppy=<span class="keyword">True</span>))</span><br><span class="line">    dataset = dataset.apply(tf.contrib.data.shuffle_and_repeat(<span class="number">10000</span>, NUM_EPOCHS))</span><br><span class="line">    dataset = dataset.apply(tf.contrib.data.map_and_batch(parser_fn, batch_size, num_parallel_batches=<span class="number">4</span>))</span><br><span class="line">    dataset = dataset.prefetch(<span class="number">4</span>)</span><br><span class="line">    <span class="keyword">return</span> dataset</span><br></pre></td></tr></table></figure>
+<h1 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h1><ul>
+<li><a href="https://www.tensorflow.org/programmers_guide/datasets" target="_blank" rel="noopener">Datasets</a></li>
+<li><a href="https://towardsdatascience.com/how-to-use-dataset-in-tensorflow-c758ef9e4428" target="_blank" rel="noopener">How to use Dataset in TensorFlow</a></li>
+<li><a href="https://www.youtube.com/watch?v=SxOsJPaxHME" target="_blank" rel="noopener">Training Performance: A user’s guide to converge faster</a></li>
+</ul>
+
+          
         
       
     </div>
@@ -1161,7 +544,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/10/05/ML/不均衡数据的处理/">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/06/17/Linux/01_Linux命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Satan">
@@ -1180,7 +563,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/05/ML/不均衡数据的处理/" itemprop="url">不均衡数据的处理</a></h1>
+                <a class="post-title-link" href="/2018/06/17/Linux/01_Linux命令/" itemprop="url">Linux命令</a></h1>
         
 
         <div class="post-meta">
@@ -1192,8 +575,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-05T23:37:23+08:00">
-                2017-10-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-17T18:47:26+08:00">
+                2018-06-17
               </time>
             
 
@@ -1215,8 +598,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
-                    <span itemprop="name">machine learning</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -1253,14 +636,40 @@
 
       
         
-          <p>本文旨在回顾论文<a href="https://arxiv.org/abs/1608.06048" title="Survey of resampling techniques for improving classification performance in unbalanced datasets" target="_blank" rel="noopener">Survey of resampling techniques for improving classification performance in unbalanced datasets</a>。该论文中，Ajinkya More回顾了以往文献中提出的一些重采样技术，用其处理人工合成的不均衡数据集，并研究各种技术对分类性能的影响。论文中关于欠采样和过采样方法总结比较全面，算法描述清晰，实验配图丰富。论文中提及的算法见下图：<img title="Resampling Techniques" src="http://oydrxt8yx.bkt.clouddn.com/images//ML/Resampling.png"> 论文中关于CNN算法的描述，个人比较推荐看<a href="http://www.math.le.ac.uk/people/ag153/homepage/KNN/KNN3.html#L7" title="CNN for data reduction" target="_blank" rel="noopener">CNN for data reduction</a>; 关于EasyEnsemble和BalanceCascade算法的描述，个人推荐看原始论文<a href="https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/tsmcb09.pdf" title="Exploratory Undersampling for Class-Imbalance Learning" target="_blank" rel="noopener">Exploratory Undersampling for Class-Imbalance Learning</a>。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/05/ML/不均衡数据的处理/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <h1 id="Nohup命令"><a href="#Nohup命令" class="headerlink" title="Nohup命令"></a><a href="https://blog.csdn.net/rickiyeat/article/details/71158936" target="_blank" rel="noopener">Nohup命令</a></h1><ol>
+<li><p>nohup.out的由来及作用<br> 用途：LINUX命令用法，不挂断地运行命令。<br> 语法：<code>nohup Command [ Arg … ] [　&amp; ]</code><br> 描述：<code>nohup</code>命令运行由<code>Command</code>参数和任何相关的<code>Arg</code>参数指定的命令，忽略所有挂断（SIGHUP）信号。在注销后使用<code>nohup</code>命令运行后台中的程序。要运行后台中的<code>nohup</code>命令，添加<code>&amp;</code>到命令的尾部。<br> 例子：<code>nohup ./startWeblogic.sh &amp;</code>意思是即使退出ssh界面，命令仍然在后台执行，并且打印过程日志到<code>nohup.out</code>,当然也可以将<code>nohup.out</code>的输出转向到其他文件，高级应用请参考扩展阅读。</p>
+</li>
+<li><p>nohup.out的查看方式与方法<br> <code>nohup.out</code>采用追加方式记录命令的输出结果，这会导致文件不断增大，若想搜索出错内容，一般会采用以下两种方式：</p>
+<ol>
+<li>linux本机查看： 使用tail 命令，查看最新的日志，或滚动监控日志打印。<br>例如:<ul>
+<li><code>tail -1000 nohup.out</code>（查看最后1000行日志文本）</li>
+<li><code>tail -ｆ nohup.out</code>（监控日志打印）</li>
+</ul>
+</li>
+<li>ftp下载到主机查看（推荐vscode）</li>
+</ol>
+</li>
+<li>nohup.out维护管理方法（清空nohup.out)<br> 两个可以不用停止WEB服务就可以清空nohup.out的命令。<ol>
+<li><code>cp /dev/null nohup.out</code></li>
+<li><code>cat /dev/null &gt; nohup.out</code></li>
+</ol>
+</li>
+<li><p>扩展阅读</p>
+<ol>
+<li><p>nohup的重定向，一劳永逸解决nohup.out文件过大的问题</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 只输出错误信息到日志文件log</span></span><br><span class="line">nohup ./program &gt;/dev/null 2&gt;<span class="built_in">log</span> &amp;</span><br><span class="line"><span class="comment"># 什么信息也不要</span></span><br><span class="line">nohup ./program &gt;/dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Linux的3种重定向</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0: 表示标准输入</span><br><span class="line">1: 标准输出,在一般使用时，默认的是标准输出</span><br><span class="line">2: 标准错误信息输出</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>/dev/null</code>文件<br>Linux下还有一个特殊的文件<code>/dev/null</code>，它就像一个无底洞，所有重定向到它的信息都会消失得无影无踪。这一点非常有用，当我们不需要回显程序的所有信息时，就可以将输出重定向到<code>/dev/null</code>。</p>
+</li>
+</ol>
+</li>
+</ol>
+
+          
         
       
     </div>
@@ -1307,7 +716,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/10/04/Ubuntu/Hexo搭建个人博客/">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/06/16/Ubuntu/04_Ubuntu 16.04科学上网/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Satan">
@@ -1326,7 +735,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/04/Ubuntu/Hexo搭建个人博客/" itemprop="url">Hexo搭建个人博客</a></h1>
+                <a class="post-title-link" href="/2018/06/16/Ubuntu/04_Ubuntu 16.04科学上网/" itemprop="url">Ubuntu 16.04科学上网</a></h1>
         
 
         <div class="post-meta">
@@ -1338,8 +747,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-04T23:00:18+08:00">
-                2017-10-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-16T16:17:26+08:00">
+                2018-06-16
               </time>
             
 
@@ -1399,13 +808,11 @@
 
       
         
-          <p>本文主要介绍Hexo搭建个人博客过程。内容主要包括Hexo环境搭建、相关配置、主题配置、七牛图床的使用及Mathjax转义问题等。</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 详见 https://hexo.io/docs/index.html</span></span><br><span class="line">sudo apt-get install git git-core</span><br></pre></td></tr></table></figure>
-<h4 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 详见https://github.com/creationix/nvm，具体版本（如v0.33.1）可能会变</span></span><br><span class="line">wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line">nvm install stable</span><br></pre></td></tr></table></figure>
-<h4 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Installation</span></span><br><span class="line">npm install -g hexo-cli</span><br><span class="line"><span class="comment">#　</span></span><br><span class="line"><span class="comment"># Initialization</span></span><br><span class="line">hexo init &lt;folder&gt;　<span class="comment"># &lt;folder&gt;为本地目录</span></span><br><span class="line"><span class="built_in">cd</span> &lt;folder&gt;</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+          <p>本文假设读者已获得服务器相关信息（服务器ip地址、端口号、用户名、密码、加密方法等），若读者没有以上信息，可以到<a href="[Vultr吧](https://tieba.baidu.com/f?kw=vultr&amp;ie=utf-8)">这里</a>找人合租服务器，合租者会教你如何操作。当然，读者也可以按照<a href="[Vultr服务器搭建](https://www.vultrcn.com/1.html)">这里</a>的教程搭建属于自己的服务器。本文则主要介绍Ubuntu 16.04下Shadowsocks的安装与配置，以方便大家科学上网。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python-pip python-setuptools shadowsocks</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/10/04/Ubuntu/Hexo搭建个人博客/#more" rel="contents">
+            <a class="btn" href="/2018/06/16/Ubuntu/04_Ubuntu 16.04科学上网/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1456,7 +863,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/10/03/Ubuntu/Ubuntu 16.04软件安装/">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2018/05/15/DL/01_Windows7 x64离线安装keras和theano/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Satan">
@@ -1475,7 +882,308 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/03/Ubuntu/Ubuntu 16.04软件安装/" itemprop="url">Ubuntu 16.04软件安装</a></h1>
+                <a class="post-title-link" href="/2018/05/15/DL/01_Windows7 x64离线安装keras和theano/" itemprop="url">Windows7 x64离线安装keras和theano</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T22:49:44+08:00">
+                2018-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><ul>
+<li><a href="https://msdn.itellyou.cn/" target="_blank" rel="noopener">visual studio 2015</a></li>
+<li><a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">cuda_9.0.176_windows</a></li>
+<li><a href="https://developer.nvidia.com/cudnn" target="_blank" rel="noopener">cudnn-9.0-windows7-x64-v7.1</a></li>
+<li><a href="https://www.jetbrains.com/pycharm/download/#section=windows" target="_blank" rel="noopener">pycharm-community-2018.1.1</a></li>
+<li><a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/" target="_blank" rel="noopener">Miniconda3-latest-Windows-x86_64</a></li>
+<li><a href="https://www.nvidia.cn/Download/index.aspx" target="_blank" rel="noopener">391.35-desktop-win8-win7-64bit-international-whql</a></li>
+</ul>
+<p><em>注</em>: 显卡驱动需要根据显卡型号去NVIDIA官网下载<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/15/DL/01_Windows7 x64离线安装keras和theano/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/10/04/Other/01_Hexo搭建个人博客/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Satan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Satan’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/04/Other/01_Hexo搭建个人博客/" itemprop="url">Hexo搭建个人博客</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-04T23:00:18+08:00">
+                2017-10-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Ubuntu/" itemprop="url" rel="index">
+                    <span itemprop="name">Ubuntu</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本文主要介绍Hexo搭建个人博客过程。内容主要包括Hexo环境搭建、相关配置、主题配置、七牛图床的使用及Mathjax转义问题等。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 详见 https://hexo.io/docs/index.html</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Git</span></span><br><span class="line">sudo apt-get install git git-core</span><br><span class="line"></span><br><span class="line"><span class="comment"># Node.js</span></span><br><span class="line"><span class="comment"># 详见https://github.com/creationix/nvm，具体版本（如v0.33.1）可能会变</span></span><br><span class="line">wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line">nvm install stable</span><br><span class="line"></span><br><span class="line"><span class="comment"># Hexo</span></span><br><span class="line"><span class="comment"># Installation</span></span><br><span class="line">npm install -g hexo-cli</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialization</span></span><br><span class="line">hexo init &lt;folder&gt;　<span class="comment"># &lt;folder&gt;为本地目录</span></span><br><span class="line"><span class="built_in">cd</span> &lt;folder&gt;</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/04/Other/01_Hexo搭建个人博客/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/10/03/Ubuntu/03_Ubuntu 16.04软件安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Satan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Satan’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/Ubuntu/03_Ubuntu 16.04软件安装/" itemprop="url">Ubuntu 16.04软件安装</a></h1>
         
 
         <div class="post-meta">
@@ -1550,10 +1258,10 @@
         
           <p>本文主要介绍Ubuntu 16.04下英伟达显卡驱动、CUDA 8.0、cuDNN 5.1、VirtualEnv、OpenCV 3.1.0、Genymotion、XMind 8等的安装方法。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su root</span><br><span class="line"><span class="comment"># 根据需求自行修改</span></span><br><span class="line"><span class="built_in">export</span> PROGRAMS_HOME=/home/programs</span><br><span class="line"><span class="built_in">export</span> ENV_PROFILE_PATH=/etc/bash.bashrc</span><br></pre></td></tr></table></figure>
-<h3 id="NVIDIA-Driver"><a href="#NVIDIA-Driver" class="headerlink" title="NVIDIA Driver"></a>NVIDIA Driver</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除旧驱动</span></span><br><span class="line">apt-get purge nvidia-*</span><br><span class="line"><span class="comment"># 禁用自带的nouveau nvidia驱动</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"blacklist nouveau"</span> &gt;&gt; /etc/modprobe.d/blacklist-nouveau.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"options nouveau modeset=0"</span> &gt;&gt; /etc/modprobe.d/blacklist-nouveau.conf</span><br><span class="line">update-initramfs -u</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启系统并进入文本模式(Ctrl + Alt + F1)</span></span><br><span class="line">reboot</span><br><span class="line"><span class="comment"># 检查nouveau是否存在</span></span><br><span class="line">lsmod | grep nouveau</span><br><span class="line"><span class="comment"># 查看显卡型号,根据显卡型号(如GT 1080)去官网下载相应驱动</span></span><br><span class="line">lspci -v | grep VGA</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭X-Windows服务</span></span><br><span class="line">service lightdm stop</span><br><span class="line"><span class="comment"># 多显卡时可能需要加--no-opengl-files参数，解决用户卡在登录界面循环登录问题</span></span><br><span class="line">bash NVIDIA-Linux-x86_64-375.66.run</span><br><span class="line"><span class="comment"># 重启X-Windows服务，进入图形界面(Ctrl + Alt + F7)</span></span><br><span class="line">service lightdm start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看nvidia显卡驱动</span></span><br><span class="line">nvidia-smi</span><br><span class="line">nvidia-settings</span><br></pre></td></tr></table></figure>
+<h1 id="NVIDIA-Driver"><a href="#NVIDIA-Driver" class="headerlink" title="NVIDIA Driver"></a>NVIDIA Driver</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除旧驱动</span></span><br><span class="line">apt-get purge nvidia-*</span><br><span class="line"><span class="comment"># 禁用自带的nouveau nvidia驱动</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"blacklist nouveau"</span> &gt;&gt; /etc/modprobe.d/blacklist-nouveau.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"options nouveau modeset=0"</span> &gt;&gt; /etc/modprobe.d/blacklist-nouveau.conf</span><br><span class="line">update-initramfs -u</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启系统并进入文本模式(Ctrl + Alt + F1)</span></span><br><span class="line">reboot</span><br><span class="line"><span class="comment"># 检查nouveau是否存在</span></span><br><span class="line">lsmod | grep nouveau</span><br><span class="line"><span class="comment"># 查看显卡型号,根据显卡型号(如GT 1080)去官网下载相应驱动</span></span><br><span class="line">lspci -v | grep VGA</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭X-Windows服务</span></span><br><span class="line">service lightdm stop</span><br><span class="line"><span class="comment"># 多显卡时可能需要加--no-opengl-files参数，解决用户卡在登录界面循环登录问题</span></span><br><span class="line">bash NVIDIA-Linux-x86_64-375.66.run</span><br><span class="line"><span class="comment"># 重启X-Windows服务，进入图形界面(Ctrl + Alt + F7)</span></span><br><span class="line">service lightdm start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看nvidia显卡驱动</span></span><br><span class="line">nvidia-smi</span><br><span class="line">nvidia-settings</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/10/03/Ubuntu/Ubuntu 16.04软件安装/#more" rel="contents">
+            <a class="btn" href="/2017/10/03/Ubuntu/03_Ubuntu 16.04软件安装/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1604,7 +1312,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/10/02/Ubuntu/Ubuntu 16.04常见问题/">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/10/02/Ubuntu/02_Ubuntu 16.04常见问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Satan">
@@ -1623,7 +1331,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/02/Ubuntu/Ubuntu 16.04常见问题/" itemprop="url">Ubuntu 16.04常见问题</a></h1>
+                <a class="post-title-link" href="/2017/10/02/Ubuntu/02_Ubuntu 16.04常见问题/" itemprop="url">Ubuntu 16.04常见问题</a></h1>
         
 
         <div class="post-meta">
@@ -1697,10 +1405,174 @@
       
         
           <p>本文主要介绍Ubuntu 16.04下常见问题的解决方法。文中提及的问题包括: 更换网卡驱动、修改网卡名称、同步双系统时间、shell终端以窗口形式打开文件夹、禁用系统奔溃报告、重启Unity、E: Sub-process /usr/bin/dpkg returned an error code (1)、静态ip地址、dns &amp; gateway、搜狗无法输入中文、护眼工具redshift无法定位、有道词典安装。</p>
-<h3 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h3><h4 id="更换网卡驱动"><a href="#更换网卡驱动" class="headerlink" title="更换网卡驱动"></a>更换网卡驱动</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看网卡,(eth0,有线;wlan0,无线;lo,本地)</span></span><br><span class="line">ifconfig -a</span><br><span class="line"><span class="comment"># 查看网卡信息</span></span><br><span class="line">ethtool -i eth0</span><br><span class="line"><span class="comment"># 查看网卡型号和生产厂商信息</span></span><br><span class="line">lspci | grep net</span><br><span class="line">lspci -v</span><br><span class="line"><span class="comment"># 根据网卡型号(如RTL8111/8168/8411)去官网下载驱动包，解压运行</span></span><br><span class="line">tar jxvf 0007-r8168-8.043.02.tar.bz2</span><br><span class="line"><span class="built_in">cd</span> r8168-8.043.02/</span><br><span class="line">sudo make</span><br><span class="line">sudo bash autorun.sh</span><br><span class="line"><span class="comment"># 按需重启</span></span><br></pre></td></tr></table></figure>
+<h1 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h1><h2 id="更换网卡驱动"><a href="#更换网卡驱动" class="headerlink" title="更换网卡驱动"></a>更换网卡驱动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看网卡,(eth0,有线;wlan0,无线;lo,本地)</span></span><br><span class="line">ifconfig -a</span><br><span class="line"><span class="comment"># 查看网卡信息</span></span><br><span class="line">ethtool -i eth0</span><br><span class="line"><span class="comment"># 查看网卡型号和生产厂商信息</span></span><br><span class="line">lspci | grep net</span><br><span class="line">lspci -v</span><br><span class="line"><span class="comment"># 根据网卡型号(如RTL8111/8168/8411)去官网下载驱动包，解压运行</span></span><br><span class="line">tar jxvf 0007-r8168-8.043.02.tar.bz2</span><br><span class="line"><span class="built_in">cd</span> r8168-8.043.02/</span><br><span class="line">sudo make</span><br><span class="line">sudo bash autorun.sh</span><br><span class="line"><span class="comment"># 按需重启</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/10/02/Ubuntu/Ubuntu 16.04常见问题/#more" rel="contents">
+            <a class="btn" href="/2017/10/02/Ubuntu/02_Ubuntu 16.04常见问题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zerolew.github.io/2017/10/01/Ubuntu/01_Ubuntu 16.04安装及配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Satan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Satan’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/01/Ubuntu/01_Ubuntu 16.04安装及配置/" itemprop="url">Ubuntu 16.04安装及配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-01T23:43:04+08:00">
+                2017-10-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Ubuntu/" itemprop="url" rel="index">
+                    <span itemprop="name">Ubuntu</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本文主要介绍Ubuntu 16.04系统的U盘启动盘制作、系统安装、系统个性化设置、常用软件安装及不常用软件清理等过程。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><ol>
+<li>UltraISO</li>
+<li>EasyBCD</li>
+<li>FixMbr</li>
+<li>Ubuntu镜像(.iso)</li>
+</ol>
+<h2 id="U盘启动盘制作"><a href="#U盘启动盘制作" class="headerlink" title="U盘启动盘制作"></a>U盘启动盘制作</h2><ol>
+<li>启动UltraISO，”文件”-&gt; “打开”，找到Ubuntu镜像，打开</li>
+<li>“启动”-&gt;”写入硬盘镜像”</li>
+<li>“写入方式”选择”USB-HDD+”</li>
+<li>“便捷启动”-&gt;”写入新的驱动器引导扇区”-&gt;”Syslinux”</li>
+<li>点击”写入”，等待写入完成</li>
+</ol>
+<h2 id="磁盘分配"><a href="#磁盘分配" class="headerlink" title="磁盘分配"></a>磁盘分配</h2><ol>
+<li>右键: “计算机”-&gt;”管理”-&gt;”硬盘管理”</li>
+<li>选择某分区，右键”删除卷”，得到空闲空间(free space)</li>
+</ol>
+<p><em>注:</em> “删除卷”内的数据会丢失</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/01/Ubuntu/01_Ubuntu 16.04安装及配置/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1741,10 +1613,6 @@
   </section>
 
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
 
 
           </div>
@@ -1792,7 +1660,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
