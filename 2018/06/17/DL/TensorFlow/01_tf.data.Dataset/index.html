@@ -131,7 +131,7 @@
 <meta property="og:site_name" content="Satan’s Blog">
 <meta property="og:description" content="Generic OverviewIn order to use a Dataset we need three steps:  Importing Data. Create a Dataset instance from some data Create an Iterator. By using the created dataset to make an Iterator instance t">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2018-06-17T16:30:09.614Z">
+<meta property="og:updated_time" content="2018-06-18T14:59:48.683Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tf.data.Dataset">
 <meta name="twitter:description" content="Generic OverviewIn order to use a Dataset we need three steps:  Importing Data. Create a Dataset instance from some data Create an Iterator. By using the created dataset to make an Iterator instance t">
@@ -436,6 +436,7 @@
 <li><strong>Create an Iterator.</strong> By using the created dataset to make an Iterator instance to iterate thought the dataset</li>
 <li><strong>Consuming Data.</strong> By using the created iterator we can get the elements from the dataset to feed the model</li>
 </ul>
+<a id="more"></a>
 <h2 id="Importing-Data"><a href="#Importing-Data" class="headerlink" title="Importing Data"></a>Importing Data</h2><ul>
 <li><p><strong>From numpy array</strong></p>
   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a random vector of shape (100,2)</span></span><br><span class="line">x = np.random.sample((<span class="number">100</span>,<span class="number">2</span>))</span><br><span class="line"><span class="comment"># make a dataset from a numpy array</span></span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices(x)</span><br><span class="line"></span><br><span class="line">features, labels = (np.random.sample((<span class="number">100</span>,<span class="number">2</span>)), np.random.sample((<span class="number">100</span>,<span class="number">1</span>)))</span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices((features,labels))</span><br></pre></td></tr></table></figure>
